@@ -11,7 +11,7 @@
     "schema": "projects/api/prisma/schema.prisma"
   },
   "scripts": {
-    "postinstall": "pnpx prisma generate",
+    "postinstall": "pnpm -F=api prisma:generate",
     "dev": "docker compose down && docker volume rm --force secondrive_postgres-data && docker compose up -d && pnpm -F=api prisma && pnpm --parallel -r dev",
     "lint": "pnpm --parallel -r lint",
     "format": "pnpm --parallel -r format",
