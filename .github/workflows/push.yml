@@ -1,0 +1,47 @@
+name: CI/CD_PUSH
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node_version: [18.14.0]
+      fail-fast: false
+
+    name: Buidl, Lint, Test and Check formatting
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+        
+      - name: Use Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node_version }}
+          cache: 'pnpm'
+        
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build project
+        run: pnpm run build
+      
+      - name: Lint
+        run: pnpm run lint
+  
+      - name: Check formatting
+        run: pnpm run format
+
+      - name: Test unit
+        run: pnpm run test
