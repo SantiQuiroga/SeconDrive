@@ -1,0 +1,22 @@
+{
+  "name": "second-drive",
+  "version": "0.1.0",
+  "description": "An E-Commerce website for selling parts of cars.",
+  "main": "projects/api/src/dist/src/main.js",
+  "license": "MIT",
+  "workspaces": [
+    "projects/*"
+  ],
+  "prisma": {
+    "schema": "projects/api/prisma/schema.prisma"
+  },
+  "scripts": {
+    "postinstall": "pnpx prisma generate",
+    "dev": "docker compose down && docker volume rm --force secondrive_postgres-data && docker compose up -d && pnpm -F=api prisma && pnpm --parallel -r dev",
+    "lint": "pnpm --parallel -r lint",
+    "format": "pnpm --parallel -r format",
+    "test": "pnpm --parallel -r test",
+    "build": "pnpm --parallel -r build",
+    "start": "node projects/api/dist/src/main.js"
+  }
+}

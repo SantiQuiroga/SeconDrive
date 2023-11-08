@@ -1,0 +1,37 @@
+version: '3.1'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-secondrive
+    restart: always
+    environment:
+      POSTGRES_DB: secondrive_db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    ports:
+      - 5050:5050
+    command: -p 5050
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./sql/inserts.sql:/docker-entrypoint-initdb.d/inserts.sql
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin-secondrive
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_LISTEN_PORT: 6060
+    ports:
+      - 6060:6060
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+
+volumes:
+  postgres-data:
+  pgadmin-data:
