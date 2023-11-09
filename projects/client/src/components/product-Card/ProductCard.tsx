@@ -15,13 +15,13 @@ function ProductCard({
       </div>
       {discount > 0 && <OfferBadge discount={discount} />}
 
-      <div className='py-2'>
-        <p className='text-lg font-bold flex items-center justify-center'>
+      <div className='py-2 font-ropa'>
+        <p className='font-bold text-3xl flex items-center justify-center font-ropa'>
           {children}
         </p>
         <div>
-          <span className='flex w-full text-base'>Price</span>
-          <span className='flex w-full text-base'>${price}</span>
+          <span className='flex w-full text-base font-ropa'>Price</span>
+          <span className='flex w-full text-base font-ropa'>$ {price}</span>
         </div>
       </div>
 

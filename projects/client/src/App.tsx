@@ -1,8 +1,12 @@
+import icon from '@/components/product-Card/assets/Motor.svg';
+
+import ProductCard from './components/product-Card/ProductCard';
+
 function App() {
   return (
-    <div className='grid place-content-center min-h-screen bg-gray-700 text-white text-3xl font-bold'>
-      <h1 className='text-center'>SeconDrive</h1>
-    </div>
+    <ProductCard image={icon} discount={50} price='400' alt='Hola'>
+      Engine
+    </ProductCard>
   );
 }
 
