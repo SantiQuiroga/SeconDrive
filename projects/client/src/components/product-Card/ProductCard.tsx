@@ -1,15 +1,5 @@
-import React from 'react';
-
 import AddToCartButton from './extra-components/AddToCartButton';
 import OfferBadge from './extra-components/OfferBadge';
-
-interface ProductCardProps {
-  children: React.ReactNode;
-  image: string;
-  price: string;
-  discount: number;
-  alt: string;
-}
 
 function ProductCard({
   children,
