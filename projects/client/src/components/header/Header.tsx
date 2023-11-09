@@ -38,7 +38,6 @@ function Header() {
           }}
         />
         <Button
-          data_testID='search-button'
           onClick={() => {
             if (search === '') {
               ref.current?.focus();
