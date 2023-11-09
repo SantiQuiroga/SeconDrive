@@ -1,8 +1,17 @@
+import { Route, Routes } from 'react-router-dom';
+
+import Layout from './layouts/Layout';
+import Home from './pages/home/Home';
+import Search from './pages/search/Search';
+
 function App() {
   return (
-    <div className='grid place-content-center min-h-screen bg-gray-700 text-white text-3xl font-bold'>
-      <h1 className='text-center'>SeconDrive</h1>
-    </div>
+    <Layout>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/search/:search' element={<Search />} />
+      </Routes>
+    </Layout>
   );
 }
 
