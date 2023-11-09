@@ -1,1 +1,2 @@
-packages: -'projects/**';
+packages:
+  - 'projects/**'
