@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,10 +8,79 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  name      String?
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  userId        Int      @id @unique @default(autoincrement())
+  firstName     String
+  lastName      String
+  email         String   @unique
+  password      String
+  streetAddress String
+  building      String
+  zipCode       String
+  city          String
+  country       String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  cart          Cart?
+}
+
+model Category {
+  categoryId Int       @id @unique @default(autoincrement())
+  name       String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  products   Product[]
+}
+
+model Tax {
+  taxId      Int      @id @unique @default(autoincrement())
+  zipCode    String
+  percentage Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  orders     Order[]
+}
+
+model Product {
+  productId    Int           @id @unique @default(autoincrement())
+  categoryId   Int
+  name         String
+  description  String
+  price        Float
+  category     Category      @relation(fields: [categoryId], references: [categoryId])
+  cartProducts CartProduct[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Cart {
+  cartId       Int           @id @unique @default(autoincrement())
+  userId       Int           @unique
+  user         User          @relation(fields: [userId], references: [userId])
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  cartProducts CartProduct[]
+  order        Order?
+}
+
+model CartProduct {
+  cartProductId Int      @id @unique @default(autoincrement())
+  cartId        Int
+  productId     Int
+  quantity      Int
+  cart          Cart     @relation(fields: [cartId], references: [cartId])
+  product       Product  @relation(fields: [productId], references: [productId])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Order {
+  orderId         Int    @id @unique @default(autoincrement())
+  cartId          Int    @unique
+  taxId           Int
+  shippingAddress String
+  billingAddress  String
+  invoiceDetails  String
+  timeEstimation  String
+  cart            Cart   @relation(fields: [cartId], references: [cartId])
+  tax             Tax    @relation(fields: [taxId], references: [taxId])
 }
