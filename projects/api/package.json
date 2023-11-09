@@ -2,7 +2,10 @@
   "name": "api",
   "scripts": {
     "dev": "DATABASE_URL=\"postgresql://root:root@localhost:5050/secondrive_db\" nest start --watch",
+<<<<<<< HEAD
     "dev:windows": "nest start --watch",
+=======
+>>>>>>> 2ecf6dd (feat: category and product end points)
     "lint": "eslint \"{src,test}/**/*.ts\" --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "test": "jest --coverage --detectOpenHandles --passWithNoTests",
