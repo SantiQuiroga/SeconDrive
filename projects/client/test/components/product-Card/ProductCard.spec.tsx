@@ -16,7 +16,7 @@ test('renders ProductCard correctly', () => {
 
   expect(getByText('Product Name')).toBeInTheDocument();
   expect(getByText('Price')).toBeInTheDocument();
-  expect(getByText('$29.99')).toBeInTheDocument();
+  expect(getByText('$ 29.99')).toBeInTheDocument();
 });
 
 test('renders OfferBadge when discount is provided', () => {

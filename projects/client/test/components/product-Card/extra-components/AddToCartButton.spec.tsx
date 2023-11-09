@@ -12,6 +12,6 @@ test('has the correct CSS classes and style', () => {
   const button = container.querySelector('button');
 
   expect(button).toHaveClass(
-    'flex items-center justify-center bg-white rounded w-full p-2 text-base font-medium'
+    'flex items-center text-xl justify-center bg-white rounded w-full p-2 font-medium font-ropa'
   );
 });
