@@ -16,11 +16,12 @@ function ProductCard({
   discount,
 }: ProductCardProps) {
   return (
-    <div className="relative w-[250px] text-black bg-[#DED9E1] p-5 rounded-lg ">
-       <div className="relative">
+    <div className="relative w-[230px] text-black bg-[#DED9E1] p-5 rounded-lg ">
+       <div className="relative bg-white rounded flex items-center justify-center">
         <img
           src={image}
-          className="h-24 w-full object-cover"
+          className="h-24 rounded object-cover"
+          alt='sa'
         />
       </div>
       {discount > 0 && <OffertBadge discount={discount} />}
