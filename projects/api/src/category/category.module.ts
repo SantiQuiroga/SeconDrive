@@ -9,4 +9,4 @@ import CategoryService from './category.service';
   controllers: [CategoryController],
   providers: [CategoryService, PrismaService],
 })
-export default class ClientsModule {}
+export default class CategoryModule {}
