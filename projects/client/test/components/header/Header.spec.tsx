@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useNavigate } from 'react-router-dom';
 
@@ -39,7 +39,10 @@ describe('Header', () => {
     const buttonElement = screen.getByTestId('search-button');
 
     fireEvent.change(inputElement, { target: { value: 'test' } });
-    await userEvent.click(buttonElement);
+
+    await act(async () => {
+      await userEvent.click(buttonElement);
+    });
 
     const searchButton = screen.getByTestId('search-button');
     expect(searchButton).toHaveProperty('onclick');
