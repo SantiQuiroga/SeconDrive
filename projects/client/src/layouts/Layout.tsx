@@ -12,7 +12,12 @@ function Layout({ children }: Props) {
       <header className='grow-0'>
         <Header />
       </header>
-      <div className='grow'>{children}</div>
+      <div className='grow'>
+        <div
+          className={`fixed left-0 h-full z-10 w-full bg-black/20 py-3 px-5 transform transition-transform ${'-translate-x-full'}`}
+        />
+        <div className='bg-red-100 fixed h-full w-full z-0'>{children}</div>
+      </div>
     </div>
   );
 }
