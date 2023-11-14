@@ -1,11 +1,14 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import cart from '@/assets/images/cart.png';
 import logo from '@/assets/images/logo.png';
 import menu from '@/assets/images/menu.png';
 import user from '@/assets/images/user.png';
+import useHandleSearch from '@/hooks/header/useHandleSearch';
+import useIsFocusedState from '@/hooks/header/useIsFocusedState';
+import useSearchState from '@/hooks/header/useSearchState';
 
 import Button from '../Button';
 
@@ -14,14 +17,12 @@ type Props = {
 };
 
 function Header({ setIsOpen }: Props) {
-  const [search, setSearch] = useState<string>('');
-  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [search, setSearch] = useSearchState('');
+  const [isFocused, setIsFocused] = useIsFocusedState(false);
   const ref = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  };
+  const handleSearch = useHandleSearch(setSearch);
 
   return (
     <div className='w-full bg-[#fed700] py-2 px-5 flex justify-between content-center place-items-center'>
