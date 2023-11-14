@@ -9,7 +9,11 @@ import user from '@/assets/images/user.png';
 
 import Button from '../Button';
 
-function Header() {
+type Props = {
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+function Header({ setIsOpen }: Props) {
   const [search, setSearch] = useState<string>('');
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const ref = useRef<HTMLInputElement>(null);
@@ -22,7 +26,11 @@ function Header() {
   return (
     <div className='w-full bg-[#fed700] py-2 px-5 flex justify-between content-center place-items-center'>
       <div className='flex gap-6'>
-        <Button>
+        <Button
+          onClick={() => {
+            setIsOpen(prev => !prev);
+          }}
+        >
           <img src={menu} alt='menu' className='h-[45px]' />
         </Button>
         <Button>
