@@ -6,7 +6,7 @@
     "lint": "eslint \"{src,test}/**/*.ts\" --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "test": "jest --coverage --detectOpenHandles --passWithNoTests",
-    "prisma": "DATABASE_URL=\"postgresql://root:root@localhost:5050/secondrive_db\" xprisma generate && DATABASE_URL=\"postgresql://root:root@localhost:5050/secondrive_db\" prisma db push --accept-data-loss",
+    "prisma": "DATABASE_URL=\"postgresql://root:root@localhost:5050/secondrive_db\" prisma generate && DATABASE_URL=\"postgresql://root:root@localhost:5050/secondrive_db\" prisma db push --accept-data-loss",
     "prisma:windows": "prisma generate && prisma db push --accept-data-loss",
     "prisma:generate": "prisma generate",
     "build": "nest build"
