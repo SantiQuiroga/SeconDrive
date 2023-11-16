@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import AddToCartButton from '@/components/product-Card/extra-components/AddToCartButton';
+import AddToCartButton from '@/app/components/product-Card/components/AddToCartButton';
 
 test('renders Add to Cart button correctly', () => {
   const { getByText } = render(<AddToCartButton />);

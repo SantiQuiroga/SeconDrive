@@ -4,9 +4,20 @@
 
 @layer {
   @font-face {
-    font-family: 'RopaSans';
+    font-family: 'ropa-sans';
+    font-weight: 400;
     font-style: normal;
-    font-weight: normal;
-    src: url('assets/fonts/RopaSans-Regular.ttf')
+    src: url('assets/fonts/ropa-sans-regular.ttf')
   }
+
+  @font-face {
+    font-family: 'ropa-sans';
+    font-weight: 400;
+    font-style: italic;
+    src: url('assets/fonts/ropa-sans-italic.ttf')
+  }
+}
+
+* {
+  font-family: 'ropa-sans', sans-serif;
 }

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import OfferBadge from '@/components/product-Card/extra-components/OfferBadge';
+import OfferBadge from '@/app/components/product-Card/components/OfferBadge';
 
 test('renders OfferBadge with discount correctly', () => {
   const { getByText } = render(<OfferBadge discount={20} />);

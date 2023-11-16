@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import ProductCard from '@/components/product-Card/ProductCard';
+import ProductCard from '@/app/components/product-Card/ProductCard';
 
 test('renders ProductCard correctly', () => {
   const { getByText } = render(
