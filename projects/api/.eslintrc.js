@@ -36,7 +36,6 @@ module.exports = {
     '@typescript-eslint/no-extraneous-class': 'off',
     '@typescript-eslint/no-unsafe-member-access': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    'prettier/prettier': ['error'],
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
   },

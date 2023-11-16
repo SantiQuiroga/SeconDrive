@@ -24,11 +24,11 @@ model User {
 }
 
 model Category {
-  categoryId Int       @id @unique @default(autoincrement())
-  name       String
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  products   Product[]
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
 }
 
 model Tax {
@@ -41,12 +41,12 @@ model Tax {
 }
 
 model Product {
-  productId    Int           @id @unique @default(autoincrement())
+  id           Int           @id @unique @default(autoincrement())
   categoryId   Int
   name         String
   description  String
   price        Float
-  category     Category      @relation(fields: [categoryId], references: [categoryId])
+  category     Category      @relation(fields: [categoryId], references: [id])
   cartProducts CartProduct[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
@@ -68,7 +68,7 @@ model CartProduct {
   productId     Int
   quantity      Int
   cart          Cart     @relation(fields: [cartId], references: [cartId])
-  product       Product  @relation(fields: [productId], references: [productId])
+  product       Product  @relation(fields: [productId], references: [id])
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
