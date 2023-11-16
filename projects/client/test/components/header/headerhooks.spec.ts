@@ -1,8 +1,8 @@
 import { act, renderHook } from '@testing-library/react';
 
-import useHandleSearch from '@/hooks/header/useHandleSearch';
-import useIsFocusedState from '@/hooks/header/useIsFocusedState';
-import useSearchState from '@/hooks/header/useSearchState';
+import useHandleSearch from '@/app/hooks/header/useHandleSearch';
+import useIsFocusedState from '@/app/hooks/header/useIsFocusedState';
+import useSearchState from '@/app/hooks/header/useSearchState';
 
 describe('useIsFocusedState Hook', () => {
   test('should return initial value', () => {

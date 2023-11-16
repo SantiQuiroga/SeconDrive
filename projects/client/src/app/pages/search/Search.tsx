@@ -1,4 +1,4 @@
-import useSearchParams from '@/hooks/search/useSearchParams';
+import useSearchParams from '@/app/hooks/search/useSearchParams';
 
 function Search() {
   const search = useSearchParams();

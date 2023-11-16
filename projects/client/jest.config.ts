@@ -14,9 +14,9 @@ const config = {
   clearMocks: true,
   collectCoverage: true,
   coverageDirectory: 'coverage',
-  collectCoverageFrom: ['src/hooks/**/*.{js,jsx,ts,tsx}'],
+  collectCoverageFrom: ['src/app/hooks/**/*.{js,jsx,ts,tsx}'],
   coverageThreshold: {
-    'src/hooks/**/*.{js,jsx,ts,tsx}': {
+    'src/app/hooks/**/*.{js,jsx,ts,tsx}': {
       statements: 80,
       branches: 80,
       functions: 80,
