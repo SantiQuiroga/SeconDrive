@@ -1,7 +1,7 @@
 function OfferBadge({ discount }: DiscountBadgeProps) {
   return (
-    <div className='absolute top-4 text-xl font-bold right-0 bg-red-500 text-white p-1 font-ropa'>
-      {discount}% off
+    <div className='absolute top-4 text-2xl font-bold right-0 bg-[#DC0700] text-white p-1 font-ropa'>
+      {discount}%
     </div>
   );
 }
