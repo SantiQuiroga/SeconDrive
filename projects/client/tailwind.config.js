@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {},
     fontFamily: {
-      ropa: ['RopaSans', 'sans-serif'],
+      ropa: ['ropa-sans', 'sans-serif'],
     },
   },
   plugins: [],

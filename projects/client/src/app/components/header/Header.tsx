@@ -1,28 +1,26 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import cart from '@/assets/images/cart.png';
-import logo from '@/assets/images/logo.png';
-import menu from '@/assets/images/menu.png';
-import user from '@/assets/images/user.png';
-import useHandleSearch from '@/hooks/header/useHandleSearch';
-import useIsFocusedState from '@/hooks/header/useIsFocusedState';
-import useSearchState from '@/hooks/header/useSearchState';
-
-import Button from '../Button';
+import Button from '../button/Button';
+import cart from './assets/cart.png';
+import logo from './assets/logo.png';
+import menu from './assets/menu.png';
+import user from './assets/user.png';
 
 type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 function Header({ setIsOpen }: Props) {
-  const [search, setSearch] = useSearchState('');
-  const [isFocused, setIsFocused] = useIsFocusedState(false);
+  const [search, setSearch] = useState<string>('');
+  const [isFocused, setIsFocused] = useState<boolean>(false);
   const ref = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
-  const handleSearch = useHandleSearch(setSearch);
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
 
   return (
     <div className='w-full bg-[#fed700] py-2 px-5 flex justify-between content-center place-items-center'>
@@ -34,9 +32,12 @@ function Header({ setIsOpen }: Props) {
         >
           <img src={menu} alt='menu' className='h-[45px]' />
         </Button>
-        <Button>
+        <a
+          href='/'
+          className='transition duration-100 active:transform active:scale-90 cursor-pointer'
+        >
           <img src={logo} alt='logo' className='h-[45px]' />
-        </Button>
+        </a>
       </div>
       <div>
         <div

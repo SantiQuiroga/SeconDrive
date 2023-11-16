@@ -13,4 +13,5 @@
     "onType": false
   },
   "jest.jestCommandLine": "npm run test -w api -w client --",
+  "svg.preview.background": "custom",
 }

@@ -23,17 +23,17 @@ function SideBar({ isOpen }: Props): JSX.Element {
       }`}
     >
       <div className='p-4'>
-        <h2 className='text-[26px] font-bold text-black mb-1 text-base font-ropa-sans'>
+        <h2 className='text-[26px] text-black mb-1 text-base font-ropa-sans'>
           CATEGORIES:
         </h2>
-        <hr className='border-black border-[1.2px] mb-5' />
+        <hr className='border-black border-[1.2px] mb-3' />
         <ul>
-          {items.map((item, i) => {
+          {items.map((item, index) => {
             return (
-              <li className='mb-5 ml-3'>
+              <li key={item} className='mb-3 ml-3'>
                 <a
-                  href={`/category${i + 1}`}
-                  className='text-[26px] font-bold text-black hover:text-blue-500 text-base font-ropa-sans'
+                  href={`/${index + 1}/${item}`}
+                  className='text-[26px] text-black hover:text-blue-500 text-base font-ropa-sans'
                 >
                   {item}
                 </a>
