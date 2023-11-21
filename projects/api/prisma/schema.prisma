@@ -18,6 +18,7 @@ model User {
   zipCode       String
   city          String
   country       String
+  phone         String
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   cart          Cart?
@@ -45,7 +46,12 @@ model Product {
   categoryId   Int
   name         String
   description  String
+  brand        String
+  image        String
   price        Float
+  stock        Int
+  unitSold     Int
+  discount     Float
   category     Category      @relation(fields: [categoryId], references: [id])
   cartProducts CartProduct[]
   createdAt    DateTime      @default(now())
