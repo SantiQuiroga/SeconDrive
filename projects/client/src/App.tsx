@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import Layout from './app/layouts/Layout';
+import CartPage from './app/pages/Cart/CartPage';
 import Category from './app/pages/category/Category';
 import Home from './app/pages/home/Home';
 import ProductPage from './app/pages/product/Product';
@@ -14,6 +15,7 @@ function App() {
         <Route path='/search/:search' element={<Search />} />
         <Route path='/:category/:name' element={<Category />} />
         <Route path='/product/:id' element={<ProductPage />} />
+        <Route path='/cart' element={<CartPage />} />
       </Routes>
     </Layout>
   );
