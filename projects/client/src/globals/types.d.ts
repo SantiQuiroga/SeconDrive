@@ -40,4 +40,20 @@ declare global {
     onError: (error: string) => void;
     initialValue?: number;
   }
+
+  interface InputProps {
+    children: React.ReactNode;
+    regex?: RegExp;
+    inputText?: string;
+    className?: string;
+  }
+
+  interface DropDownProps {
+    children: React.ReactNode;
+    items: string[];
+    regex?: RegExp;
+    inputText?: string;
+    className?: string;
+    onSelect?: (selectedItem: string) => void;
+  }
 }
