@@ -1,5 +1,5 @@
 -- Create User table
-CREATE TABLE "User" (
+CREATE TABLE IF NOT EXISTS "User" (
   "userId" SERIAL PRIMARY KEY,
   "firstName" VARCHAR(255),
   "lastName" VARCHAR(255),
@@ -17,7 +17,7 @@ CREATE TABLE "User" (
 );
 
 -- Create Category table
-CREATE TABLE "Category" (
+CREATE TABLE IF NOT EXISTS "Category" (
   "id" SERIAL PRIMARY KEY,
   "name" VARCHAR(255),
   "createdAt" TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
@@ -25,7 +25,7 @@ CREATE TABLE "Category" (
 );
 
 -- Create Tax table
-CREATE TABLE "Tax" (
+CREATE TABLE IF NOT EXISTS "Tax" (
   "taxId" SERIAL PRIMARY KEY,
   "zipCode" VARCHAR(255),
   "percentage" FLOAT,
@@ -34,7 +34,7 @@ CREATE TABLE "Tax" (
 );
 
 -- Create Product table
-CREATE TABLE "Product" (
+CREATE TABLE IF NOT EXISTS "Product" (
   "id" SERIAL PRIMARY KEY,
   "categoryId" INT,
   "name" VARCHAR(255),
@@ -51,7 +51,7 @@ CREATE TABLE "Product" (
 );
 
 -- Create Cart table
-CREATE TABLE "Cart" (
+CREATE TABLE IF NOT EXISTS "Cart" (
   "cartId" SERIAL PRIMARY KEY,
   "userId" INT UNIQUE,
   "createdAt" TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
@@ -61,7 +61,7 @@ CREATE TABLE "Cart" (
 );
 
 -- Create CartProduct table
-CREATE TABLE "CartProduct" (
+CREATE TABLE IF NOT EXISTS "CartProduct" (
   "cartProductId" SERIAL PRIMARY KEY,
   "cartId" INT,
   "productId" INT,
@@ -73,7 +73,7 @@ CREATE TABLE "CartProduct" (
 );
 
 -- Create Order table
-CREATE TABLE "Order" (
+CREATE TABLE IF NOT EXISTS "Order" (
   "orderId" SERIAL PRIMARY KEY,
   "cartId" INT UNIQUE,
   "taxId" INT,
