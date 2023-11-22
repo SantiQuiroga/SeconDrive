@@ -44,7 +44,12 @@ describe('ProductService', () => {
                 name: 'Test Product',
                 price: 10.99,
                 categoryId: 1,
-                description: ''
+                description: '',
+                brand: 'abc',
+                image: '',
+                stock: 0,
+                unitSold: 0,
+                discount: 0,
             };
             const createdProduct: Product = {
                 id: 1,
@@ -52,6 +57,11 @@ describe('ProductService', () => {
                 price: 10.99,
                 categoryId: 1,
                 description: '',
+                brand: 'abc',
+                image: '',
+                stock: 0,
+                unitSold: 0,
+                discount: 0,
                 createdAt: new Date(),
                 updatedAt: new Date()
             };
@@ -73,6 +83,11 @@ describe('ProductService', () => {
                     price: 10.99,
                     categoryId: 1,
                     description: '',
+                    brand: 'abc',
+                    image: '',
+                    stock: 0,
+                    unitSold: 0,
+                    discount: 0,
                     createdAt: new Date(),
                     updatedAt: new Date()
                 },
@@ -82,6 +97,11 @@ describe('ProductService', () => {
                     price: 20.99,
                     categoryId: 2,
                     description: '',
+                    brand: 'abc',
+                    image: '',
+                    stock: 0,
+                    unitSold: 0,
+                    discount: 0,
                     createdAt: new Date(),
                     updatedAt: new Date()
                 },
@@ -103,6 +123,11 @@ describe('ProductService', () => {
                 price: 10.99,
                 categoryId: 1,
                 description: '',
+                brand: 'abc',
+                image: '',
+                stock: 0,
+                unitSold: 0,
+                discount: 0,
                 createdAt: new Date(),
                 updatedAt: new Date()
             };
@@ -124,6 +149,11 @@ describe('ProductService', () => {
                     price: 10.99,
                     categoryId: 1,
                     description: '',
+                    brand: 'abc',
+                    image: '',
+                    stock: 0,
+                    unitSold: 0,
+                    discount: 0,
                     createdAt: new Date(),
                     updatedAt: new Date()
                 },
@@ -133,6 +163,11 @@ describe('ProductService', () => {
                     price: 20.99,
                     categoryId: 2,
                     description: '',
+                    brand: 'abc',
+                    image: '',
+                    stock: 0,
+                    unitSold: 0,
+                    discount: 0,
                     createdAt: new Date(),
                     updatedAt: new Date()
                 },
@@ -155,6 +190,11 @@ describe('ProductService', () => {
                     price: 10.99,
                     categoryId: 1,
                     description: '',
+                    brand: 'abc',
+                    image: '',
+                    stock: 0,
+                    unitSold: 0,
+                    discount: 0,
                     createdAt: new Date(),
                     updatedAt: new Date()
                 },
@@ -164,6 +204,11 @@ describe('ProductService', () => {
                     price: 20.99,
                     categoryId: 1,
                     description: '',
+                    brand: 'abc',
+                    image: '',
+                    stock: 0,
+                    unitSold: 0,
+                    discount: 0,
                     createdAt: new Date(),
                     updatedAt: new Date()
                 },
@@ -190,6 +235,11 @@ describe('ProductService', () => {
                 price: 15.99,
                 categoryId: 2,
                 description: '',
+                brand: 'abc',
+                image: '',
+                stock: 0,
+                unitSold: 0,
+                discount: 0,
                 createdAt: new Date(),
                 updatedAt: new Date()
             };
@@ -213,6 +263,11 @@ describe('ProductService', () => {
                 price: 10.99,
                 categoryId: 1,
                 description: '',
+                brand: 'abc',
+                image: '',
+                stock: 0,
+                unitSold: 0,
+                discount: 0,
                 createdAt: new Date(),
                 updatedAt: new Date()
             };
