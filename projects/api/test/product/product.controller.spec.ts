@@ -40,6 +40,11 @@ describe('ProductController', () => {
                 id: 0,
                 categoryId: 0,
                 description: 'brief description',
+                brand: 'ccc',
+                image: '',
+                stock: 0,
+                unitSold: 0,
+                discount: 0,
                 createdAt: new Date(),
                 updatedAt: new Date("2023-11-09T16:56:18.683Z")
             };
@@ -54,8 +59,8 @@ describe('ProductController', () => {
     describe('findAll', () => {
         it('should return an array of products', async () => {
             const products: Product[] = [
-                { id: 1, name: 'Test Product 1', price: 10, categoryId: 1, description: 'description 1', createdAt: new Date(), updatedAt: new Date() },
-                { id: 2, name: 'Test Product 2', price: 20, categoryId: 2, description: 'description 2', createdAt: new Date(), updatedAt: new Date() }
+                { id: 1, name: 'Test Product 1', price: 10, categoryId: 1, description: 'description 1', brand: 'ccc', image: '', stock: 0, unitSold: 0, discount: 0, createdAt: new Date(), updatedAt: new Date() },
+                { id: 2, name: 'Test Product 2', price: 20, categoryId: 2, description: 'description 2', brand: 'ccc', image: '', stock: 0, unitSold: 0, discount: 0, createdAt: new Date(), updatedAt: new Date() }
             ];
             jest.spyOn(productService, 'findAll').mockResolvedValueOnce(products);
 
@@ -66,7 +71,7 @@ describe('ProductController', () => {
 
     describe('findOne', () => {
         it('should return a product by id', async () => {
-            const product: Product = { id: 1, name: 'Test Product', price: 10, categoryId: 1, description: 'description', createdAt: new Date(), updatedAt: new Date() };
+            const product: Product = { id: 1, name: 'Test Product', price: 10, categoryId: 1, description: 'description', brand: 'ccc', image: '', stock: 0, unitSold: 0, discount: 0, createdAt: new Date(), updatedAt: new Date() };
             jest.spyOn(productService, 'findOne').mockResolvedValueOnce(product);
 
             expect(await controller.findOne('1')).toBe(product);
@@ -77,8 +82,8 @@ describe('ProductController', () => {
     describe('findAllByName', () => {
         it('should return an array of products by name', async () => {
             const products: Product[] = [
-                { id: 1, name: 'Test Product 1', price: 10, categoryId: 1, description: 'description 1', createdAt: new Date(), updatedAt: new Date() },
-                { id: 2, name: 'Test Product 2', price: 20, categoryId: 2, description: 'description 2', createdAt: new Date(), updatedAt: new Date() }
+                { id: 1, name: 'Test Product 1', price: 10, categoryId: 1, description: 'description 1', brand: 'ccc', image: '', stock: 0, unitSold: 0, discount: 0, createdAt: new Date(), updatedAt: new Date() },
+                { id: 2, name: 'Test Product 2', price: 20, categoryId: 2, description: 'description 2', brand: 'ccc', image: '', stock: 0, unitSold: 0, discount: 0, createdAt: new Date(), updatedAt: new Date() }
             ];
             jest.spyOn(productService, 'findAll').mockResolvedValueOnce(products);
 
@@ -93,6 +98,11 @@ describe('ProductController', () => {
                 id: 1, name: 'Test Product', price: 10,
                 categoryId: 0,
                 description: '',
+                brand: 'ccc',
+                image: '',
+                stock: 0,
+                unitSold: 0,
+                discount: 0,
                 createdAt: new Date(),
                 updatedAt: new Date("2023-11-09T16:56:18.683Z")
             };
@@ -106,14 +116,24 @@ describe('ProductController', () => {
     describe('findAllByName2', () => {
         it('should return an array of products by name', async () => {
             const products: Product[] = [{
-                 id: 1, name: 'Test Product 1', price: 10, 
+                 id: 1, name: 'Test Product 1', price: 10,
                  categoryId: 0,
                  description: '',
+                 brand: 'ccc',
+                 image: '',
+                 stock: 0,
+                 unitSold: 0,
+                 discount: 0,
                  createdAt: new Date(),
-                 updatedAt: new Date("2023-11-09T16:56:18.683Z") }, 
-                 { id: 2, name: 'Test Product 2', price: 20, 
+                 updatedAt: new Date("2023-11-09T16:56:18.683Z") },
+                 { id: 2, name: 'Test Product 2', price: 20,
                  categoryId: 0,
                  description: '',
+                 brand: 'ccc',
+                 image: '',
+                 stock: 0,
+                 unitSold: 0,
+                 discount: 0,
                  createdAt: new Date(),
                  updatedAt: new Date("2023-11-09T16:56:18.683Z")}];
             jest.spyOn(productService, 'findAllByName').mockResolvedValueOnce(products);
@@ -129,11 +149,21 @@ describe('ProductController', () => {
                 id: 1, name: 'Test Product 1', price: 10,
                 categoryId: 0,
                 description: '',
+                brand: 'ccc',
+                image: '',
+                stock: 0,
+                unitSold: 0,
+                discount: 0,
                 createdAt: new Date(),
                 updatedAt: new Date("2023-11-09T16:56:18.683Z") },
                  { id: 2, name: 'Test Product 2', price: 20,
                  categoryId: 0,
                  description: '',
+                 brand: 'ccc',
+                 image: '',
+                 stock: 0,
+                 unitSold: 0,
+                 discount: 0,
                  createdAt: new Date(),
                  updatedAt: new Date("2023-11-09T16:56:18.683Z") }];
             jest.spyOn(productService, 'findAllByCategoryId').mockResolvedValueOnce(products);
@@ -149,6 +179,11 @@ describe('ProductController', () => {
                 id: 1, name: 'Test Product', price: 10,
                 categoryId: 0,
                 description: '',
+                brand: 'ccc',
+                image: '',
+                stock: 0,
+                unitSold: 0,
+                discount: 0,
                 createdAt: new Date(),
                 updatedAt: new Date("2023-11-09T16:56:18.683Z") };
             jest.spyOn(productService, 'update').mockResolvedValueOnce(product);
@@ -164,6 +199,11 @@ describe('ProductController', () => {
                 id: 1, name: 'Test Product', price: 10,
                 categoryId: 0,
                 description: '',
+                brand: 'ccc',
+                image: '',
+                stock: 0,
+                unitSold: 0,
+                discount: 0,
                 createdAt: new Date(),
                 updatedAt: new Date("2023-11-09T16:56:18.683Z") };
             jest.spyOn(productService, 'remove').mockResolvedValueOnce(product);

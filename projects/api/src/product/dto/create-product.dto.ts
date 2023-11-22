@@ -18,7 +18,32 @@ export default class CreateProductDto {
   description: string;
 
   @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  brand: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  image: string;
+
+  @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
   price: number;
+
+  @ApiProperty()
+  @IsInt()
+  @IsNotEmpty()
+  stock: number;
+
+  @ApiProperty()
+  @IsNumber()
+  @IsNotEmpty()
+  unitSold: number;
+
+  @ApiProperty()
+  @IsNumber()
+  @IsNotEmpty()
+  discount: number;
 }

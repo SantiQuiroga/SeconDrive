@@ -17,7 +17,22 @@ export default class ProductEntity implements Product {
   description: string;
 
   @ApiProperty()
+  brand: string;
+
+  @ApiProperty()
+  image: string;
+
+  @ApiProperty()
   price: number;
+
+  @ApiProperty()
+  stock: number;
+
+  @ApiProperty()
+  unitSold: number;
+
+  @ApiProperty()
+  discount: number;
 
   @ApiProperty()
   createdAt: Date;
