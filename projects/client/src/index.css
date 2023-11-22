@@ -16,6 +16,12 @@
     font-style: italic;
     src: url('assets/fonts/ropa-sans-italic.ttf')
   }
+  @font-face {
+    font-family: 'ropa-sans';
+    font-weight: 400;
+    font-style: italic;
+    src: url('assets/fonts/ropa-sans-italic.ttf')
+  }
 }
 
 * {
