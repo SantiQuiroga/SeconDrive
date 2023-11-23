@@ -112,7 +112,16 @@ function Home() {
     const newCurrentIndex = Math.max(0, Math.min(newIndex, maxIndex));
     setCurrentBestSellersIndex(newCurrentIndex);
   }
+  /*
+  const [products, setProducts] = useState([]);
 
+  useEffect(() => {
+    fetch('http://localhost:3000/api/product')
+      .then(response => response.json())
+      .then(data => setProducts(data))
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
+  */
   return (
     <div
       className='h-full w-full flex flex-col px-40
