@@ -1,81 +1,74 @@
 import { useEffect, useState } from 'react';
 
+import { getAllProducts, ProductApi } from '@/api/productApi';
 import ProductCard from '@/app/components/product-Card/ProductCard';
 
 import carBanner from './assets/car.png';
-import jsonData from './assets/data.json';
 import leftIcon from './assets/left.png';
 import rightIcon from './assets/right.png';
 
-interface Product {
-  id: string;
-  categoryId: string;
-  name: string;
-  description: string;
-  brand: string;
-  price: string;
-  image: string;
-  stock: string;
-  discount: string;
-  unitsold: string;
-}
-
 function Home() {
   const [brands, setBrands] = useState<Set<string>>(new Set());
-  const [offersData, setOffersData] = useState<Product[]>([]);
-  const [bestSellersData, setBestSellersData] = useState<Product[]>([]);
+  const [offersData, setOffersData] = useState<ProductApi[]>([]);
+  const [bestSellersData, setBestSellersData] = useState<ProductApi[]>([]);
   const [offersBrand, setOffersBrand] = useState<string>('Brand');
   const [bestSellersBrand, setBestSellersBrand] = useState<string>('Brand');
   const [currentOffersIndex, setCurrentOffersIndex] = useState(0);
   const [currentBestSellersIndex, setCurrentBestSellersIndex] = useState(0);
+  const [products, setProducts] = useState<ProductApi[]>([]);
 
   useEffect(() => {
-    setBrands(new Set(jsonData.map(item => item.brand)));
-    setOffersData(
-      jsonData
-        .filter(item => Number(item.discount) > 0)
-        .sort((a, b) => Number(b.stock) - Number(a.stock))
-    );
-    setBestSellersData(
-      jsonData
-        .filter(item => Number(item.discount) === 0)
-        .sort((a, b) => Number(b.unitsold) - Number(a.unitsold))
-    );
+    getAllProducts()
+      .then((res: Response) => res.json())
+      .then((data: ProductApi[]) => {
+        setProducts(data);
+      })
+      .catch((err: Error) => {
+        return err;
+      });
   }, []);
 
   useEffect(() => {
+    const uniqueBrandsSet = new Set<string>();
+
+    products
+      .sort((a, b) => Number(b.stock) - Number(a.stock))
+      .forEach(product => {
+        uniqueBrandsSet.add(product.brand);
+      });
+
+    setBrands(uniqueBrandsSet);
+  }, [products]);
+
+  useEffect(() => {
     if (offersBrand === 'Brand') {
-      setOffersData(
-        jsonData
-          .filter(item => Number(item.discount) > 0)
-          .sort((a, b) => Number(b.stock) - Number(a.stock))
-      );
+      const offers = products
+        .filter(product => product.discount > 0)
+        .sort((a, b) => Number(b.stock) - Number(a.stock));
+      setOffersData(offers);
     } else {
-      setOffersData(
-        jsonData
-          .filter(item => Number(item.discount) > 0)
-          .filter(item => item.brand === offersBrand)
-          .sort((a, b) => Number(b.stock) - Number(a.stock))
-      );
+      const offers = products
+        .filter(product => product.brand === offersBrand)
+        .filter(product => product.discount > 0)
+        .sort((a, b) => Number(b.stock) - Number(a.stock));
+      setOffersData(offers);
     }
-  }, [offersBrand]);
+  }, [products, offersBrand]);
 
   useEffect(() => {
     if (bestSellersBrand === 'Brand') {
-      setBestSellersData(
-        jsonData
-          .filter(item => Number(item.discount) === 0)
-          .sort((a, b) => Number(b.unitsold) - Number(a.unitsold))
-      );
+      const bestSellers = products
+        .filter(product => product.discount === 0)
+        .sort((a, b) => b.unitSold - a.unitSold);
+      setBestSellersData(bestSellers);
     } else {
-      setBestSellersData(
-        jsonData
-          .filter(item => Number(item.discount) === 0)
-          .filter(item => item.brand === bestSellersBrand)
-          .sort((a, b) => Number(b.unitsold) - Number(a.unitsold))
-      );
+      const bestSellers = products
+        .filter(product => product.discount === 0)
+        .filter(product => product.brand === bestSellersBrand)
+        .sort((a, b) => b.unitSold - a.unitSold);
+      setBestSellersData(bestSellers);
     }
-  }, [bestSellersBrand]);
+  }, [bestSellersBrand, products]);
 
   function handleOffersCarousel(direction: 'prev' | 'next') {
     if (offersData.length < 5) return;
@@ -112,16 +105,7 @@ function Home() {
     const newCurrentIndex = Math.max(0, Math.min(newIndex, maxIndex));
     setCurrentBestSellersIndex(newCurrentIndex);
   }
-  /*
-  const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    fetch('http://localhost:3000/api/product')
-      .then(response => response.json())
-      .then(data => setProducts(data))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
-  */
   return (
     <div
       className='h-full w-full flex flex-col px-40
