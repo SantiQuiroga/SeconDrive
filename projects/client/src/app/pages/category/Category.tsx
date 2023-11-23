@@ -237,7 +237,6 @@ function Category() {
             onPageChange={(e: { selected: number }) =>
               handlePageChange(e.selected)
             }
-            forcePage={currentPage}
             containerClassName='w-full flex justify-center gap-10 items-center text-3xl'
             activeClassName='text-[#0038FF]'
             previousLabel=''
