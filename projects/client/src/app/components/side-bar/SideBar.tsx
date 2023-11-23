@@ -1,3 +1,5 @@
+import settingsIcon from './assets/setting.png';
+
 type Props = {
   isOpen: boolean;
 };
@@ -22,7 +24,7 @@ function SideBar({ isOpen }: Props): JSX.Element {
         isOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
     >
-      <div className='p-4'>
+      <div className='p-4 h-full flex flex-col'>
         <h2 className='text-[26px] text-black mb-1 text-base font-ropa-sans'>
           CATEGORIES:
         </h2>
@@ -42,14 +44,16 @@ function SideBar({ isOpen }: Props): JSX.Element {
           })}
         </ul>
         <hr className='border-black border-[1.2px]' />
-      </div>
-      <div className='absolute bottom-4 left-4'>
-        <button
-          type='button'
-          className='text-black hover:text-blue-500 text-base font-ropa-sans'
-        >
-          Settings
-        </button>
+        <div className='h-full flex justify-end flex-col'>
+          <div className='mb-10'>
+            <button
+              type='button'
+              className='text-black hover:text-blue-500 text-base font-ropa-sans'
+            >
+              <img src={settingsIcon} alt='settings logo' />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
