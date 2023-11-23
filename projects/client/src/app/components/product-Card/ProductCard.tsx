@@ -1,7 +1,14 @@
-import { useNavigate } from 'react-router-dom';
-
 import AddToCartButton from './components/AddToCartButton';
 import OfferBadge from './components/OfferBadge';
+
+type ProductCardProps = {
+  children: React.ReactNode;
+  id: string;
+  image: string;
+  price: number;
+  discount: number;
+  alt: string;
+};
 
 function ProductCard({
   children,
@@ -11,15 +18,10 @@ function ProductCard({
   discount,
   alt,
 }: ProductCardProps) {
-  const navigate = useNavigate();
-
   return (
-    <button
-      type='button'
+    <a
       className='relative w-[230px] text-black bg-[#ded9e1] p-5 rounded-lg h-fit'
-      onClick={() => {
-        navigate(`/product/${id}`);
-      }}
+      href={`/product/${id}`}
     >
       <div className='relative bg-white rounded flex items-center justify-center h-24 overflow-hidden'>
         <img
@@ -52,7 +54,7 @@ function ProductCard({
       </div>
 
       <AddToCartButton />
-    </button>
+    </a>
   );
 }
 
