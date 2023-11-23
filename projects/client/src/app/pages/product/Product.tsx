@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import jsonData from '../home/assets/data.json';
 
@@ -33,13 +33,18 @@ function ProductPage() {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | undefined>(undefined);
   const [isUsd, setIsUsd] = useState(true);
+  const [isAvailable, setIsAvailable] = useState(true);
+
   const [isBol, setIsBol] = useState(false);
   const [priceUsd, setPriceUsd] = useState(0);
   const [priceBol, setPriceBol] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!jsonData.some(item => item.id === id)) return;
     setProduct(jsonData.find(item => item.id === id) as Product);
+    if (Number(jsonData.find(item => item.id === id)?.stock) === 0)
+      setIsAvailable(false);
     setPriceUsd(Number(jsonData.find(item => item.id === id)?.price));
     setPriceBol(Number(jsonData.find(item => item.id === id)?.price) * 6.97);
   }, [id]);
@@ -56,6 +61,11 @@ function ProductPage() {
     setIsUsd(false);
   };
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    navigate('/cart');
+  };
+
   if (!product)
     return (
       <div className='h-full w-full grid place-content-center'>
@@ -68,9 +78,14 @@ function ProductPage() {
       <div className='h-full w-1/2 grid place-content-center'>
         <img src={product.image} alt={product.name} height={336} width={472} />
       </div>
+      {Number(product.discount) > 0 && (
+        <div className='right-0 top-24 absolute text-center text-2xl px-5 py-7  font-bold bg-[#DC0700] text-white first-letter: font-ropa text-[55px]'>
+          {product.discount}%
+        </div>
+      )}
       <div className='h-full w-1/2 flex flex-col gap-10 px-20 py-10 bg-[#ded9e1]'>
         <h2 className='w-full text-center text-[60px]'>{product.name}</h2>
-        <div className='flex gap-32 px-20 items-center'>
+        <div className='flex gap-32 items-center'>
           <div>
             <label htmlFor='isUSD' className='flex items-center text-[25px]'>
               USD&nbsp;
@@ -115,16 +130,26 @@ function ProductPage() {
           Price:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span className='text-[35px]'>
             {isUsd
-              ? `[USD] ${priceUsd.toFixed(0)}`
-              : `[BOL] ${priceBol.toFixed(0)}`}
+              ? `[USD] ${(
+                  priceUsd -
+                  (priceUsd * Number(product.discount)) / 100
+                ).toFixed(0)}`
+              : `[BOL] ${(
+                  priceBol -
+                  (priceBol * Number(product.discount)) / 100
+                ).toFixed(0)}`}
           </span>
         </h3>
         <button
           type='button'
           className='flex items-center text-[35px] justify-center bg-white rounded w-full p-4 font-medium font-ropa'
+          onClick={handleClick}
         >
           Add to Cart +
         </button>
+        <h3 className='text-center text-[30px]'>
+          {isAvailable ? 'Available' : 'Out of stock'}
+        </h3>
       </div>
     </div>
   );
