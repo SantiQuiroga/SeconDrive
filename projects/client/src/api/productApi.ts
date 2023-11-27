@@ -13,10 +13,8 @@ export interface ProductApi {
   updatedAt: string;
 }
 
-const url = 'http://localhost:3000/api/product';
-
 export default async function createProduct(): Promise<Response> {
-  const response = await fetch(url, {
+  const response = await fetch('/api/product', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -26,6 +24,6 @@ export default async function createProduct(): Promise<Response> {
 }
 
 export async function getAllProducts(): Promise<Response> {
-  const response = await fetch(url);
+  const response = await fetch('/api/product');
   return response;
 }
