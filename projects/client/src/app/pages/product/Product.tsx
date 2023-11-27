@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import jsonData from '../home/assets/data.json';
 
@@ -38,7 +38,6 @@ function ProductPage() {
   const [isBol, setIsBol] = useState(false);
   const [priceUsd, setPriceUsd] = useState(0);
   const [priceBol, setPriceBol] = useState(0);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!jsonData.some(item => item.id === id)) return;
@@ -59,11 +58,6 @@ function ProductPage() {
     if (isBol) return;
     setIsBol(true);
     setIsUsd(false);
-  };
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    navigate('/cart');
   };
 
   if (!product)
@@ -143,7 +137,6 @@ function ProductPage() {
         <button
           type='button'
           className='flex items-center text-[35px] justify-center bg-white rounded w-full p-4 font-medium font-ropa'
-          onClick={handleClick}
         >
           Add to Cart +
         </button>
