@@ -13,7 +13,7 @@
   "scripts": {
     "postinstall": "pnpm -F=api prisma:generate",
     "dev": "docker compose down && docker volume rm --force secondrive_postgres-data && docker compose up -d && pnpm -F=api prisma && pnpm --parallel -r dev",
-    "dev:windows": "pnpm -F=api prisma:windows && pnpm --parallel -r dev:windows",
+    "dev:windows": "docker compose down && docker volume rm --force secondrive_postgres-data && docker compose up -d && pnpm -F=api prisma:windows && pnpm --parallel -r dev:windows",
     "up": "docker compose down && docker volume rm --force secondrive_postgres-data && docker compose up -d",
     "lint": "pnpm --parallel -r lint",
     "format": "pnpm --parallel -r format",
