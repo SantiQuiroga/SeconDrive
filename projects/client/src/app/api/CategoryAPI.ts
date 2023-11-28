@@ -5,9 +5,7 @@ export interface Category {
   updatedAt: Date;
 }
 
-const url = 'http://localhost:3000/api/category';
-
 export async function getAllCategories(): Promise<Response> {
-  const response = await fetch(url);
+  const response = await fetch('/api/category');
   return response;
 }
