@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { getProductPageLink } from '@/globals/links';
 
 import AddToCartButton from './components/AddToCartButton';
 import OfferBadge from './components/OfferBadge';
@@ -11,31 +11,39 @@ function ProductCard({
   discount,
   alt,
 }: ProductCardProps) {
-  const navigate = useNavigate();
+  const cutTitle = (text: string, maxLength: number) => {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return `${text.slice(0, maxLength - 3)}...`;
+  };
+
+  const productPage = getProductPageLink(id);
+  const spanStyles = 'flex w-full text-base font-ropa';
 
   return (
-    <button
-      type='button'
-      className='relative w-[230px] text-black bg-[#ded9e1] p-5 rounded-lg h-fit'
-      onClick={() => {
-        navigate(`/product/${id}`);
-      }}
-    >
-      <div className='relative bg-white rounded flex items-center justify-center h-24 overflow-hidden'>
+    <div className='relative w-[230px] text-black bg-[#ded9e1] p-5 rounded-lg h-fit'>
+      <a
+        className='relative bg-white rounded flex items-center justify-center h-24 overflow-hidden'
+        href={productPage}
+      >
         <img
           src={image}
           alt={alt}
           className='max-h-[95%] max-w-[95%] object-cover rounded'
         />
-      </div>
+      </a>
       {discount > 0 && <OfferBadge discount={discount} />}
       <div className='py-2 font-ropa'>
-        <p className='font-bold text-3xl flex items-center justify-center font-ropa text-center'>
-          {children}
-        </p>
+        <a
+          className='font-bold text-3xl flex items-center justify-center font-ropa text-center'
+          href={productPage}
+        >
+          {cutTitle(children as string, 15)}
+        </a>
         <div>
-          <span className='flex w-full text-base font-ropa'>Price:</span>
-          <span className='flex w-full text-base font-ropa'>
+          <span className={spanStyles}>Price:</span>
+          <span className={spanStyles}>
             <span>[USD]&nbsp;</span>{' '}
             {discount > 0 ? (
               <>
@@ -52,7 +60,7 @@ function ProductCard({
       </div>
 
       <AddToCartButton />
-    </button>
+    </div>
   );
 }
 
