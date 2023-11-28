@@ -2,43 +2,47 @@ import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useParams } from 'react-router-dom';
 
+import { GetProductsByName, Product } from '@/app/api/ProductAPI';
 import ProductCard from '@/app/components/product-Card/ProductCard';
 
-import jsonData from '../home/assets/data.json';
-
-interface Product {
-  id: string;
-  categoryId: string;
-  name: string;
-  description: string;
-  brand: string;
-  price: string;
-  image: string;
-  stock: string;
-  discount: string;
-  unitsold: string;
-}
-
 function Search() {
-  const [gridData, setGridDate] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [subData, setSubData] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [error, setError] = useState<Error>();
   const { search } = useParams<{ search: string }>();
   const itemsPerPage = 25;
 
   useEffect(() => {
     if (!search) return;
-    setGridDate(
-      jsonData
-        .filter(item => item.name.includes(search))
-        .sort((a, b) => Number(b.stock) - Number(a.stock))
-    );
-    setTotalPages(Math.ceil(gridData.length / itemsPerPage));
-  }, [gridData.length, search]);
+    GetProductsByName(search)
+      .then(res => {
+        console.log('res : ', res);
+        return res.json();
+      })
+      .then((data: { products: Product[] }) => {
+        console.log('data: ', data);
+        setProducts(data.products);
+        setTotalPages(Math.ceil(data.products.length / itemsPerPage));
+      })
+      .catch((err: Error) => setError(err));
+  }, [search]);
 
-  const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const subData = gridData.slice(startIndex, endIndex);
+  useEffect(() => {
+    const startIndex = currentPage * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const slice = products.slice(startIndex, endIndex);
+    setSubData(slice);
+  }, [currentPage, products]);
+
+  if (error) {
+    return (
+      <div>
+        Error: {error.message} :--{error.name} :--{error.stack}
+      </div>
+    );
+  }
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -49,13 +53,13 @@ function Search() {
       <div className='h-full flex flex-col justify-center gap-10'>
         <div
           className={`grid gap-20 h-full w-full ${
-            gridData.length === 0 ? '' : 'grid-cols-5'
+            products.length === 0 ? '' : 'grid-cols-5'
           }`}
         >
-          {gridData.length === 0 ? (
+          {products.length === 0 ? (
             <div className='h-full grid place-content-center w-full'>
               <h1 className='text-2xl font-bold text-center'>
-                No results Found
+                No results Found for {search}
               </h1>
             </div>
           ) : (
@@ -73,7 +77,7 @@ function Search() {
             ))
           )}
         </div>
-        <div className={`${gridData.length < 26 ? 'hidden' : ''}`}>
+        <div className={`${products.length < 26 ? 'hidden' : ''}`}>
           <ReactPaginate
             pageCount={totalPages}
             onPageChange={(e: { selected: number }) =>
