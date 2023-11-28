@@ -1,5 +1,5 @@
 INSERT INTO "Category" ("name")
-VALUES ('Engines'), ('Wheels and Tires'), ('Radiators');
+VALUES ('Engines'), ('Electrical System'), ('Wheels and Tires'), ('Filters'), ('Radiator'), ('Air Bags'), ('Brake Components'), ('Belts and Hoses'), ('Electrical Components'), ('Suspension');
 
 INSERT INTO "Product" ("categoryId", "name", "description", "brand", "image", "price", "stock", "unitSold", "discount")
 VALUES

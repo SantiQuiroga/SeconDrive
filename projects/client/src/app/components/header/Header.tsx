@@ -19,7 +19,11 @@ function Header({ setIsOpen }: Props) {
   const navigate = useNavigate();
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
+    const inputValue = e.target.value;
+
+    if (/^[A-Za-z0-9\s-]*$/.test(inputValue)) {
+      setSearch(inputValue);
+    }
   };
 
   return (
@@ -54,17 +58,19 @@ function Header({ setIsOpen }: Props) {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             onKeyDown={e => {
-              if (search !== '' && e.key === 'Enter') {
-                navigate(`/search/${search}`);
+              if (e.key === 'Enter') {
+                const trimmedSearch = search.trim();
+                if (trimmedSearch !== '') {
+                  navigate(`/search/${trimmedSearch}`);
+                }
               }
             }}
           />
           <Button
             onClick={() => {
-              if (search === '') {
-                ref.current?.focus();
-              } else {
-                navigate(`/search/${search}`);
+              const trimmedSearch = search.trim();
+              if (trimmedSearch !== '') {
+                navigate(`/search/${trimmedSearch}`);
               }
             }}
           >

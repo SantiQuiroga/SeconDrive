@@ -176,7 +176,11 @@ describe('ProductService', () => {
 
             const result = await productService.findAllByName('Test Product');
 
-            expect(prismaService.product.findMany).toHaveBeenCalledWith({ where: { name: 'Test Product' } });
+            expect(prismaService.product.findMany).toHaveBeenCalledWith({ where: { "name": {
+                  "contains": "Test Product",
+                   "mode": "insensitive",
+                 },}
+                });
             expect(result).toEqual(products);
         });
     });

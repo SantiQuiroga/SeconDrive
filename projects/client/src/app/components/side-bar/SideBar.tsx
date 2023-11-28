@@ -1,3 +1,7 @@
+import { useEffect, useState } from 'react';
+
+import { Category, getAllCategories } from '@/app/api/CategoryAPI';
+
 import settingsIcon from './assets/setting.png';
 
 type Props = {
@@ -5,18 +9,23 @@ type Props = {
 };
 
 function SideBar({ isOpen }: Props): JSX.Element {
-  const items: string[] = [
-    'Engines',
-    'Electrical System',
-    'Wheels and Tires',
-    'Filters',
-    'Radiator',
-    'Air Bags',
-    'Brake Components',
-    'Belts and Hoses',
-    'Electrical Components',
-    'Suspension',
-  ];
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    getAllCategories()
+      .then((res: Response) => res.json())
+      .then((data: Category[]) => {
+        setCategories(data);
+      })
+      .catch((err: Error) => {
+        setError(err);
+      });
+  }, []);
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div
@@ -30,18 +39,16 @@ function SideBar({ isOpen }: Props): JSX.Element {
         </h2>
         <hr className='border-black border-[1.2px] mb-3' />
         <ul>
-          {items.map((item, index) => {
-            return (
-              <li key={item} className='mb-3 ml-3'>
-                <a
-                  href={`/${index + 1}/${item}`}
-                  className='text-[26px] text-black hover:text-blue-500 text-base font-ropa-sans'
-                >
-                  {item}
-                </a>
-              </li>
-            );
-          })}
+          {categories.map(category => (
+            <li key={category.id}>
+              <a
+                href={`/${category.id}`}
+                className='text-[26px] text-black hover:text-blue-500 text-base font-ropa-sans'
+              >
+                {category.name}
+              </a>
+            </li>
+          ))}
         </ul>
         <hr className='border-black border-[1.2px]' />
         <div className='h-full flex justify-end flex-col'>

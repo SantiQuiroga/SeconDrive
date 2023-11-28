@@ -138,7 +138,7 @@ describe('ProductController', () => {
                  updatedAt: new Date("2023-11-09T16:56:18.683Z")}];
             jest.spyOn(productService, 'findAllByName').mockResolvedValueOnce(products);
 
-            expect(await controller.findAllByName('Test Product')).toBe(products);
+            expect((await controller.findAllByName('Test Product')).products).toBe(products);
             expect(productService.findAllByName).toHaveBeenCalledWith('Test Product');
         });
     });
