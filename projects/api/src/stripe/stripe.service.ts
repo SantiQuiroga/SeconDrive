@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import Stripe from 'stripe';
 
-import { Cart } from './Cart.model';
+import StripeEntity from './stripe.entity';
 
 @Injectable()
-export class StripeService {
+export default class StripeService {
   private stripe;
 
   constructor() {
@@ -13,10 +13,10 @@ export class StripeService {
     });
   }
 
-  checkout(cart: Cart) {
+  checkout(cart: StripeEntity) {
     const totalPrice = cart.reduce(
-      (acc, item) => acc + item.unitSold * item.price,
-      0,
+      (acc, item) => acc + item.quantity * item.price,
+      0
     );
 
     return this.stripe.paymentIntents.create({

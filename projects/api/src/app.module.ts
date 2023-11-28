@@ -5,19 +5,19 @@ import { join } from 'path';
 
 import CategoryModule from './category/category.module';
 import ProductModule from './product/product.module';
-import { StripeModule } from './stripe/stripe.module';
+import StripeModule from './stripe/stripe.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true
+      isGlobal: true,
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../../../client/dist'),
     }),
     CategoryModule,
     ProductModule,
-    StripeModule
+    StripeModule,
   ],
 })
-export default class AppModule { }
+export default class AppModule {}
