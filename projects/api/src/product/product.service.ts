@@ -19,15 +19,11 @@ export default class ProductService {
   }
 
   async findOne(id: number): Promise<Product> {
-    try {
-      const product = await this.prisma.product.findUnique({
+    const product = this.prisma.product.findUnique({
         where: { id },
       });
       return product;
-    } catch (error) {
-      throw new Error(`Error finding product: ${error.message}`);
     }
-  }
 
    async findAllByName(name: string) {
     const products = await this.prisma.product.findMany({

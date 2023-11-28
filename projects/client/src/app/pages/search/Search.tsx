@@ -18,11 +18,9 @@ function Search() {
     if (!search) return;
     GetProductsByName(search)
       .then(res => {
-        console.log('res : ', res);
         return res.json();
       })
       .then((data: { products: Product[] }) => {
-        console.log('data: ', data);
         setProducts(data.products);
         setTotalPages(Math.ceil(data.products.length / itemsPerPage));
       })
