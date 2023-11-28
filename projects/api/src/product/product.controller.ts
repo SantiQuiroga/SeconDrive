@@ -33,9 +33,10 @@ export default class ProductController {
     return this.productService.findOne(Number(id));
   }
 
-  @Get(':name')
-  findAllByName(@Param('name') name: string): Promise<Product[]> {
-    return this.productService.findAllByName(name);
+  @Get('search/:name')
+  async findAllByName(@Param('name') name: string) {
+    const products = await this.productService.findAllByName(name);
+    return { products };
   }
 
   @Get(':categoryid')
