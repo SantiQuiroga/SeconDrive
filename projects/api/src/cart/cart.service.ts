@@ -29,4 +29,11 @@ export default class CartService {
         });
         return cart;
       }
+
+    delete(id: number): Promise<Cart> {
+      const cart = this.prisma.cart.delete({
+          where: { id },
+        });
+        return cart;
+      }
 }

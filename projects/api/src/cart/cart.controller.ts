@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post
@@ -30,5 +31,10 @@ export default class CartController {
   @Get('/user/:userid')
   findOneByUserId(@Param('userid')userId: number): Promise<Cart> {
     return this.cartService.findOneByUserId(userId);
+  }
+
+  @Delete(':id')
+  delete(@Param('id')id: number): Promise<Cart> {
+    return this.cartService.delete(id);
   }
 }

@@ -2,8 +2,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
+  Patch,
   Post
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -30,5 +32,16 @@ export default class CartProductController {
   findTotalPrice(@Param('cartId') cartId: string): Promise<any> {
     return this.cartProductService.findTotalPrice(Number(cartId));
   }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() cartProduct: any): Promise<any> {
+    return this.cartProductService.update(Number(id), cartProduct.quantity);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string): Promise<any> {
+    return this.cartProductService.remove(Number(id));
+  }
+
 
 }
