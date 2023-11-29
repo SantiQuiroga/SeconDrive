@@ -1,4 +1,4 @@
-export {};
+export { };
 
 declare global {
   type ProductCardProps = {
@@ -8,5 +8,10 @@ declare global {
     price: number;
     discount: number;
     alt: string;
+  };
+  type CheckboxPriceProps = {
+    valuePrice: string;
+    checked: boolean;
+    onToggle: () => void;
   };
 }
