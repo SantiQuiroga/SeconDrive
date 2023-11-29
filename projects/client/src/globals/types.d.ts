@@ -18,6 +18,12 @@ declare global {
     alt: string;
     stock: number;
     initialValue?: number;
+    onQuantityChange: (id: string, quantity: number) => void;
+  }
+
+  interface ProductQuantity {
+    id: string;
+    quantity: number;
   }
 
   interface NumericInputProps {
