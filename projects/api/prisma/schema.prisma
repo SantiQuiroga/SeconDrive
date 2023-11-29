@@ -59,24 +59,20 @@ model Product {
 }
 
 model Cart {
-  cartId       Int           @id @unique @default(autoincrement())
+  id           Int           @id @unique @default(autoincrement()) @map("cartId")
   userId       Int           @unique
   user         User          @relation(fields: [userId], references: [userId])
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
   cartProducts CartProduct[]
   order        Order?
 }
 
 model CartProduct {
-  cartProductId Int      @id @unique @default(autoincrement())
-  cartId        Int
-  productId     Int
-  quantity      Int
-  cart          Cart     @relation(fields: [cartId], references: [cartId])
-  product       Product  @relation(fields: [productId], references: [id])
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id        Int     @id @unique @default(autoincrement()) @map("cartProductId")
+  cartId    Int
+  productId Int
+  quantity  Int
+  cart      Cart    @relation(fields: [cartId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
 }
 
 model Order {
@@ -87,6 +83,6 @@ model Order {
   billingAddress  String
   invoiceDetails  String
   timeEstimation  String
-  cart            Cart   @relation(fields: [cartId], references: [cartId])
+  cart            Cart   @relation(fields: [cartId], references: [id])
   tax             Tax    @relation(fields: [taxId], references: [taxId])
 }
