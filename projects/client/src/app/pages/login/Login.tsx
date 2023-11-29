@@ -1,28 +1,33 @@
 import React, { useState } from 'react';
 
+import { login } from '@/app/api/LoginAPI';
+
 function Login() {
   const [error, setError] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleLogin = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
 
-    try {
-      if (password === 'password' && email === 'email@test.com') {
-        setError(false);
-      } else {
-        setError(true);
-      }
-    } catch (err) {
+    const response = await login(email, password);
+
+    if (!response) {
       setError(true);
+    } else {
+      setError(false);
+      console.log('loged as', response.email);
+
+      // TODO: Save User in local storage and State and redirect to home, show a toast with success message
     }
   };
 
   return (
     <main className='bg-black h-screen w-screen flex justify-center items-center font-ropa'>
-      <section className='bg-[#794299] h-fit w-1/2 lg:w-1/4 p-10 flex flex-col gap-5'>
+      <section className='bg-[#d0d0d0] h-fit w-1/2 lg:w-1/4 p-10 flex flex-col gap-5'>
         <h1 className='text-[26px] w-full flex justify-center'>Login</h1>
         <form onSubmit={handleLogin} className='flex flex-col gap-5'>
           <label htmlFor='email' className='flex flex-col'>
@@ -51,6 +56,7 @@ function Login() {
             <button
               type='button'
               onClick={() => setShowPassword(!showPassword)}
+              className='mt-5'
             >
               {showPassword ? 'Hide' : 'Show'} Password
             </button>
