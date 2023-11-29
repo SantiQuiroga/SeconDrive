@@ -14,13 +14,20 @@ function CartProductCard({
   alt,
   stock,
   initialValue = 1,
+  onQuantityChange,
 }: CartProductCardProps) {
   const [stockMessage, setStockMessage] = useState<string>();
-  const subtotal = Number(price).toFixed(2);
+  const discountedPrice = price - (price * discount) / 100;
+  const [subtotal, setSubtotal] = useState<number>(
+    discountedPrice * initialValue
+  );
   const productPage = getProductPageLink(id);
   const spanStyles = 'flex w-full text-base font-ropa';
 
-  const handleQuantityChange = () => {};
+  const handleQuantityChange = (newQuantity: number) => {
+    setSubtotal(newQuantity * discountedPrice);
+    onQuantityChange(id, newQuantity);
+  };
 
   const handleStockError = (error: string) => {
     setStockMessage(error);
@@ -42,7 +49,7 @@ function CartProductCard({
         <img
           src={image}
           alt={alt}
-          className='max-h-[95%] max-w-[95%] object-cover rounded'
+          className='max-h-[90%] max-w-[90%] object-cover rounded'
         />
       </a>
       {discount > 0 && <OfferBadge discount={discount} />}
@@ -53,25 +60,27 @@ function CartProductCard({
         >
           {cutTitle(children as string, 15)}
         </a>
-        <div className='flex flex-row'>
-          <span className={spanStyles}>
-            <span>Price: [USD]</span>
-            {discount > 0 ? (
-              <>
-                <span className='line-through'>{price.toFixed(2)}</span>
-                <span className='ml-1 text-[#DC0700]'>
-                  {(price - (price * discount) / 100).toFixed(2)}
-                </span>
-              </>
-            ) : (
-              Number(price).toFixed(2)
-            )}
-          </span>
-        </div>
 
-        <div>
-          <div className='flex flex-row justify-between'>
-            <span>Subtotal: {subtotal}</span>
+        <div className='flex flex-col'>
+          <div className='flex flex-row'>
+            <span className={spanStyles}>
+              <span className='text-sm'>Price: [USD]</span>
+              {discount > 0 ? (
+                <>
+                  <span className='line-through text-sm'>
+                    {price.toFixed(2)}
+                  </span>
+                  <span className='ml-1 text-[#DC0700]'>
+                    {(price - (price * discount) / 100).toFixed(2)}
+                  </span>
+                </>
+              ) : (
+                price.toFixed(2)
+              )}
+            </span>
+          </div>
+          <div className='flex flex-row space-x-3'>
+            <p>Quantity: </p>
             <NumericInput
               max={stock}
               onChange={handleQuantityChange}
@@ -79,12 +88,15 @@ function CartProductCard({
               initialValue={initialValue}
             />
           </div>
+
+          <span>Subtotal: {subtotal.toFixed(2)}</span>
+
           <p className='text-[#DC0700] text-sm w-full text-center'>
             {stockMessage} &nbsp;
           </p>
           <button
             type='button'
-            className='flex items-center text-xl justify-center bg-white w-full p-2 font-medium font-ropa'
+            className='flex items-center text-xl justify-center bg-white w-full h-8 p-2 font-medium font-ropa'
           >
             Remove
           </button>
