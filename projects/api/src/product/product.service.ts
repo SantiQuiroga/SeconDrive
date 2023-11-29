@@ -21,6 +21,13 @@ export default class ProductService {
   async findOne(id: number): Promise<Product> {
     const product = this.prisma.product.findUnique({
         where: { id },
+        include : {
+          category : {
+            select : {
+              name: true
+            }
+          }
+        }
       });
       return product;
     }

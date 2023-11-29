@@ -1,23 +1,9 @@
-
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { getAllProducts, ProductApi } from '@/api/productApi';
+import { getUniqueProduct, ProductApi } from '@/api/productApi';
 
 import CheckboxPrice from '../../components/checkbox-price/checkboxprice';
-
-const items: string[] = [
-  'Engines',
-  'Electrical System',
-  'Wheels and Tires',
-  'Filters',
-  'Radiator',
-  'Air Bags',
-  'Brake Components',
-  'Belts and Hoses',
-  'Electrical Components',
-  'Suspension',
-];
 
 function ProductPage() {
   const { id } = useParams<{ id: string }>();
@@ -30,13 +16,13 @@ function ProductPage() {
   const [priceBol, setPriceBol] = useState(0);
 
   useEffect(() => {
-    getAllProducts()
+    getUniqueProduct(id)
       .then((res: Response) => res.json())
-      .then((data: ProductApi[]) => {
-        setProduct(data.find(item => item.id === Number(id)) as ProductApi);
-        if (Number(data.find(item => item.id === Number(id))?.stock === 0)) setIsAvailable(false);
-        setPriceUsd(Number(data.find(item => item.id === Number(id))?.price));
-        setPriceBol(Number(data.find(item => item.id === Number(id))?.price) * 6.97);
+      .then((data: ProductApi) => {
+        if (data.stock < 1) setIsAvailable(false);
+        setProduct(data);
+        setPriceBol(data.price * 6.97);
+        setPriceUsd(data.price);
       })
       .catch((err: Error) => {
         return err;
@@ -91,9 +77,7 @@ function ProductPage() {
         </h3>
         <h3 className='text-[40px]'>
           Category:&nbsp;&nbsp;&nbsp;
-          <span className='text-[30px]'>
-            {items[Number(product.categoryid) - 1]}
-          </span>
+          <span className='text-[30px]'>{product.category.name}</span>
         </h3>
         <h3 className='text-[40px]'>
           Price:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
