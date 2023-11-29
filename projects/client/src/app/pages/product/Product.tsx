@@ -9,11 +9,8 @@ function ProductPage() {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<ProductApi | undefined>(undefined);
   const [isAvailable, setIsAvailable] = useState(true);
-
   const [changePrice, setChangePrice] = useState(false);
-
-  const [priceUsd, setPriceUsd] = useState(0);
-  const [priceBol, setPriceBol] = useState(0);
+  const [price, setPrice] = useState(0);
 
   useEffect(() => {
     getUniqueProduct(String(id))
@@ -21,8 +18,7 @@ function ProductPage() {
       .then((data: ProductApi) => {
         if (data.stock < 1) setIsAvailable(false);
         setProduct(data);
-        setPriceBol(data.price * 6.97);
-        setPriceUsd(data.price);
+        setPrice(data.price);
       })
       .catch((err: Error) => {
         return err;
@@ -31,10 +27,16 @@ function ProductPage() {
 
   const toggleIsUsd = () => {
     setChangePrice(false);
+    if (changePrice) {
+      setPrice(price / 6.97);
+    }
   };
 
   const toggleIsBol = () => {
     setChangePrice(true);
+    if (!changePrice) {
+      setPrice(price * 6.97);
+    }
   };
 
   if (!product)
@@ -45,18 +47,18 @@ function ProductPage() {
     );
 
   return (
-    <div className='h-full w-full flex'>
-      <div className='h-full w-1/2 grid place-content-center'>
-        <img src={product.image} alt={product.name} height={336} width={472} />
+    <div className='w-full flex'>
+      <div className='w-1/2 grid place-content-center'>
+        <img src={product.image} alt={product.name} height={300} width={472} />
       </div>
       {Number(product.discount) > 0 && (
-        <div className='right-0 top-24 absolute text-center text-2xl px-5 py-7  font-bold bg-[#DC0700] text-white first-letter: font-ropa text-[55px]'>
+        <div className='right-0 top-24 absolute text-2xl px-5 py-7  font-bold bg-[#DC0700] text-white first-letter: font-ropa text-[55px]'>
           {product.discount}%
         </div>
       )}
-      <div className='h-full w-1/2 flex flex-col gap-10 px-20 py-10 bg-[#ded9e1]'>
-        <h2 className='w-full text-center text-[60px]'>{product.name}</h2>
-        <div className='flex gap-32 items-center'>
+      <div className='w-1/2 flex flex-col gap-5 px-20 py-10 bg-[#ded9e1] text-[40px]'>
+        <h2 className='text-center text-[60px]'>{product.name}</h2>
+        <div className='flex gap-32'>
           <CheckboxPrice
             valuePrice='USD'
             checked={!changePrice}
@@ -69,33 +71,35 @@ function ProductPage() {
           />
           <span className='text-[25px]'>Change 1 (USD) = 6,97 (Bs)</span>
         </div>
-        <h3 className='text-[40px]'>Description:</h3>
+        Description:
         <p className='text-[30px]'>{product.description}</p>
-        <h3 className='text-[40px]'>
+        <h3>
           Brand:&nbsp;&nbsp;&nbsp;
           <span className='text-[30px]'>{product.brand}</span>
         </h3>
-        <h3 className='text-[40px]'>
+        <h3>
           Category:&nbsp;&nbsp;&nbsp;
           <span className='text-[30px]'>{product.category.name}</span>
         </h3>
-        <h3 className='text-[40px]'>
+        <h3>
           Price:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span className='text-[35px]'>
-            {!changePrice
-              ? `[USD] ${(
-                  priceUsd -
-                  (priceUsd * Number(product.discount)) / 100
-                ).toFixed(0)}`
-              : `[BOL] ${(
-                  priceBol -
-                  (priceBol * Number(product.discount)) / 100
-                ).toFixed(0)}`}
-          </span>
+          {!changePrice ? `[USD]` : `[BOL]`}&nbsp;
+          {product.discount > 0 ? (
+            <>
+              <span className='line-through text-[35px]'>
+                {price.toFixed(2)}
+              </span>
+              <span className='text-red-600'>
+                &nbsp;{(price - (price * product.discount) / 100).toFixed(2)}
+              </span>
+            </>
+          ) : (
+            price.toFixed(2)
+          )}
         </h3>
         <button
           type='button'
-          className='flex items-center text-[35px] justify-center bg-white rounded w-full p-4 font-medium font-ropa'
+          className='flex items-center text-[35px] justify-center bg-white w-full p-4 font-medium font-ropa'
         >
           Add to Cart +
         </button>
