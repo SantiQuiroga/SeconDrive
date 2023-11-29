@@ -11,6 +11,9 @@ export interface ProductApi {
   discount: number;
   createdAt: string;
   updatedAt: string;
+  category: {
+    name: string;
+  };
 }
 
 export default async function createProduct(): Promise<Response> {
@@ -25,5 +28,9 @@ export default async function createProduct(): Promise<Response> {
 
 export async function getAllProducts(): Promise<Response> {
   const response = await fetch('/api/product');
+  return response;
+}
+export async function getUniqueProduct(id: string): Promise<Response> {
+  const response = await fetch(`/api/product/${id}`);
   return response;
 }

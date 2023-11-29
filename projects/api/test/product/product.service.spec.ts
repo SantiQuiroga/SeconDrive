@@ -116,27 +116,40 @@ describe('ProductService', () => {
     });
 
     describe('findOne', () => {
-        it('should return a product by id', async () => {
-            const product: Product = {
-                id: 1,
-                name: 'Test Product',
-                price: 10.99,
-                categoryId: 1,
-                description: '',
-                brand: 'abc',
-                image: '',
-                stock: 0,
-                unitSold: 0,
-                discount: 0,
-                createdAt: new Date(),
-                updatedAt: new Date()
+        describe('create', () => {
+          it('should create a new product', async () => {
+            const createProductDto: CreateProductDto = {
+              name: 'Test Product',
+              price: 10.99,
+              categoryId: 1,
+              description: '',
+              brand: 'abc',
+              image: '',
+              stock: 0,
+              unitSold: 0,
+              discount: 0,
             };
-            jest.spyOn(prismaService.product, 'findUnique').mockResolvedValue(product);
+            const createdProduct: Product = {
+              id: 1,
+              name: 'Test Product',
+              price: 10.99,
+              categoryId: 1,
+              description: '',
+              brand: 'abc',
+              image: '',
+              stock: 0,
+              unitSold: 0,
+              discount: 0,
+              createdAt: new Date(),
+              updatedAt: new Date()
+            };
+            jest.spyOn(prismaService.product, 'create').mockResolvedValue(createdProduct);
 
-            const result = await productService.findOne(1);
+            const result = await productService.create(createProductDto);
 
-            expect(prismaService.product.findUnique).toHaveBeenCalledWith({ where: { id: 1 } });
-            expect(result).toEqual(product);
+            expect(prismaService.product.create).toHaveBeenCalledWith({ data: createProductDto });
+            expect(result).toEqual(createdProduct);
+          });
         });
     });
 
