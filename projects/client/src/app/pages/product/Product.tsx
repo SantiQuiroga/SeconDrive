@@ -16,7 +16,7 @@ function ProductPage() {
   const [priceBol, setPriceBol] = useState(0);
 
   useEffect(() => {
-    getUniqueProduct(id)
+    getUniqueProduct(String(id))
       .then((res: Response) => res.json())
       .then((data: ProductApi) => {
         if (data.stock < 1) setIsAvailable(false);

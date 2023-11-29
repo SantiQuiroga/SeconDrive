@@ -1,4 +1,4 @@
-function CheckboxPrice({ valuePrice, checked, onToggle }) {
+function CheckboxPrice({ valuePrice, checked, onToggle }: CheckboxPriceProps) {
   return (
     <div className='flex items-center text-[25px]'>
       {valuePrice}&nbsp;&nbsp;
