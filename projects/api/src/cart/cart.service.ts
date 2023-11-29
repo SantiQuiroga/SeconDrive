@@ -10,27 +10,27 @@ import CreateCartDto from './dto/create-cart.dto';
 export default class CartService {
   constructor(private prisma: PrismaService) {}
 
-  create(createCartDto: CreateCartDto) {
+  async create(createCartDto: CreateCartDto) {
     return this.prisma.cart.create({
       data: createCartDto,
     });
   }
 
-   findOne(id: number): Promise<Cart> {
+  async findOne(id: number): Promise<Cart> {
     const cart = this.prisma.cart.findUnique({
         where: { id },
       });
       return cart;
     }
 
-    findOneByUserId(userId: number): Promise<Cart> {
+    async findOneByUserId(userId: number): Promise<Cart> {
       const cart = this.prisma.cart.findUnique({
           where: { userId },
         });
         return cart;
       }
 
-    delete(id: number): Promise<Cart> {
+    async delete(id: number): Promise<Cart> {
       const cart = this.prisma.cart.delete({
           where: { id },
         });

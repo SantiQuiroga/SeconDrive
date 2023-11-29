@@ -42,6 +42,4 @@ export default class CartProductController {
   remove(@Param('id') id: string): Promise<any> {
     return this.cartProductService.remove(Number(id));
   }
-
-
 }
