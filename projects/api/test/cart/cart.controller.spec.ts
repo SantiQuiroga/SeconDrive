@@ -58,7 +58,7 @@ describe('CartController', () => {
 
       jest.spyOn(service, 'findOne').mockResolvedValue(expectedResult);
 
-      const result = await controller.findOne(id);
+      const result = await controller.findOne(String(id));
 
       expect(result).toEqual(expectedResult);
       expect(service.findOne).toHaveBeenCalledWith(id);
@@ -75,7 +75,7 @@ describe('CartController', () => {
 
       jest.spyOn(service, 'findOneByUserId').mockResolvedValue(expectedResult);
 
-      const result = await controller.findOneByUserId(userId);
+      const result = await controller.findOneByUserId(String(userId));
 
       expect(result).toEqual(expectedResult);
       expect(service.findOneByUserId).toHaveBeenCalledWith(userId);
@@ -92,7 +92,7 @@ describe('CartController', () => {
 
       jest.spyOn(service, 'delete').mockResolvedValue(expectedResult);
 
-      const result = await controller.delete(id);
+      const result = await controller.delete(String(id));
 
       expect(result).toEqual(expectedResult);
       expect(service.delete).toHaveBeenCalledWith(id);

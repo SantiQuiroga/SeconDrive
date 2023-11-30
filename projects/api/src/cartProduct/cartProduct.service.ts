@@ -13,6 +13,10 @@ export default class CartProductService {
     return this.prisma.cartProduct.create({ data: createCartProductDto });
   }
 
+  async findAll() {
+    return this.prisma.cartProduct.findMany();
+  }
+
   async findAllByCartId(cartId: number) {
     return this.prisma.cartProduct.findMany({ where: { cartId, quantity: { gt: 0 } } });
   }
@@ -28,14 +32,15 @@ export default class CartProductService {
     const cart = await this.prisma.cartProduct.findMany({
       where: { cartId }
     });
-    let total : number = 0;
-    cart.forEach(async (element) => {
+    const promises = cart.map(async (element) => {
       const prod = await this.prisma.product.findUnique({
         where: { id: element.productId }
       });
-      total += (Number((prod.price - (prod.price * prod.discount)).toFixed(2)) * Number(element.quantity));
-
+      return (Number((prod.price - (prod.price * prod.discount)).toFixed(2)) * Number(element.quantity));
     });
+
+    const results = await Promise.all(promises);
+    const total = results.reduce((acc, value) => acc + value, 0);
     return total;
   }
 
