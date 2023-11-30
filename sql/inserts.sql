@@ -1,8 +1,18 @@
+INSERT INTO "User" ("firstName", "lastName","email", "password", "streetAddress", "building", "zipCode", "city", "country", "phone")
+
+VALUES
+  ('John', 'Doe', 'jhon_doe@gmail.com', '12345', '123 Main St', 'Apt 4', '12345', 'Cityville', 'Countryland', '+1234567890'),
+  ('Jane', 'Smith', 'jane_smith@gmail.com', '54321', '456 Oak Ave', 'Suite 7', '56789', 'Townsville', 'Countryland', '+9876543210');
+
+INSERT INTO "Cart" ("userId")
+VALUES
+  (1), (2);
+
 INSERT INTO "Category" ("name")
 VALUES ('Engines'), ('Electrical System'), ('Wheels and Tires'), ('Filters'), ('Radiator'), ('Air Bags'), ('Brake Components'), ('Belts and Hoses'), ('Electrical Components'), ('Suspension');
-
 INSERT INTO "Product" ("categoryId", "name", "description", "brand", "image", "price", "stock", "unitSold", "discount")
 VALUES
+
   (1, 'motor 0', 'Velit sit ad amet consectetur eiusmod eiusmod cupidatat consequat elit mollit.', 'Jimbies', 'https://res.cloudinary.com/dmtslv7ui/image/upload/v1700611985/secondrive/xlfz5viwvaufp6gj27lx.png', 749, 0, 50, 0),
   (1, 'motor 1', 'Anim dolore dolore Lorem reprehenderit amet.', 'Jimbies', 'https://res.cloudinary.com/dmtslv7ui/image/upload/v1700611985/secondrive/xlfz5viwvaufp6gj27lx.png', 806, 16, 31, 0),
   (1, 'motor 2', 'Do laboris exercitation dolore exercitation esse.', 'Jimbies', 'https://res.cloudinary.com/dmtslv7ui/image/upload/v1700611985/secondrive/xlfz5viwvaufp6gj27lx.png', 478, 1, 48, 0),

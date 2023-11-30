@@ -102,7 +102,14 @@ function Header({ setIsOpen }: Props) {
             </div>
           )}
         </Button>
-        <Button>
+        <Button
+          onClick={() => {
+            if (user.firstName) {
+              navigate('/cart');
+            }
+          }}
+          disabled={!user.firstName}
+        >
           <img src={cart} alt='cart' className='h-[45px]' />
         </Button>
       </div>
