@@ -23,6 +23,9 @@ describe('CartProductService', () => {
               update: jest.fn(),
               delete: jest.fn(),
             },
+            cart: {
+              findUnique: jest.fn(),
+            },
             product: {
               findUnique: jest.fn(),
             },
@@ -38,7 +41,6 @@ describe('CartProductService', () => {
   describe('create', () => {
     it('should create a new cart product', async () => {
       const createCartProductDto: CreateCartProductDto = {
-        id: 1,
         cartId: 1,
         productId: 1,
         quantity: 1,
@@ -150,7 +152,7 @@ describe('CartProductService', () => {
       expect(prismaService.product.findUnique).toHaveBeenNthCalledWith(2, {
         where: { id: 2 },
       });
-      expect(result).toEqual(0);
+      expect(result).toEqual(30);
     });
   });
 
@@ -203,5 +205,60 @@ describe('CartProductService', () => {
       });
       expect(result).toEqual({ id, cartId, productId, quantity });
     });
+
+describe('findAll', () => {
+  it('should find all cart products', async () => {
+    const foundCartProducts: CartProduct[] = [
+      {
+        id: 1,
+        cartId: 1,
+        productId: 1,
+        quantity: 1,
+      },
+      {
+        id: 2,
+        cartId: 1,
+        productId: 2,
+        quantity: 2,
+      },
+    ];
+
+    jest.spyOn(prismaService.cartProduct, 'findMany').mockResolvedValue(foundCartProducts);
+
+    const result = await cartProductService.findAll();
+
+    expect(prismaService.cartProduct.findMany).toHaveBeenCalledWith();
+    expect(result).toEqual(foundCartProducts);
+  });
+});
+
+describe('findAllByUserId', () => {
+  it('should find all cart products by user ID', async () => {
+    const userId = 1;
+    const cartId = 1;
+    const foundCartProducts: CartProduct[] = [
+      {
+        id: 1,
+        cartId,
+        productId: 1,
+        quantity: 1,
+      },
+      {
+        id: 2,
+        cartId,
+        productId: 2,
+        quantity: 2,
+      },
+    ];
+
+
+    jest.spyOn(cartProductService, 'findAllByCartId').mockResolvedValue(foundCartProducts);
+
+    const result = await cartProductService.findAllByUserId(userId);
+
+    expect(prismaService.cart.findUnique).toHaveBeenCalledWith({ where: { userId } });
+    expect(result).toEqual(foundCartProducts);
+  });
+});
   });
 });
