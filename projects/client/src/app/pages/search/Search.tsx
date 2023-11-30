@@ -69,6 +69,7 @@ function Search() {
                 image={card.image}
                 price={Number(card.price)}
                 alt={card.name}
+                stock={card.stock}
               >
                 {card.name}
               </ProductCard>
