@@ -1,14 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { CartProduct } from '@prisma/client';
 import { IsInt, IsNotEmpty } from 'class-validator';
 
 
-export default class CreateCartProductDto implements CartProduct {
-  @ApiProperty()
-  @IsInt()
-  @IsNotEmpty()
-  id: number;
-
+export default class CreateCartProductDto {
   @ApiProperty()
   @IsInt()
   @IsNotEmpty()
