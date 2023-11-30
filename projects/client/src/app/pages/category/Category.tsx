@@ -170,6 +170,7 @@ function Category() {
                   image={item.image}
                   price={Number(item.price)}
                   alt={item.name}
+                  stock={Number(item.stock)}
                 >
                   {item.name}
                 </ProductCard>
@@ -225,6 +226,7 @@ function Category() {
                 image={card.image}
                 price={Number(card.price)}
                 alt={card.name}
+                stock={Number(card.stock)}
               >
                 {card.name}
               </ProductCard>
