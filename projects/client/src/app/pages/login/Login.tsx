@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { login } from '@/app/api/LoginAPI';
+import userStore from '@/app/store/userStore';
 
 function Login() {
   const [error, setError] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  const { setUser } = userStore.getState();
+
+  const navigate = useNavigate();
 
   const handleLogin = async (
     e: React.FormEvent<HTMLFormElement>
@@ -19,9 +25,8 @@ function Login() {
       setError(true);
     } else {
       setError(false);
-      console.log('loged as', response.email);
-
-      // TODO: Save User in local storage and State and redirect to home, show a toast with success message
+      setUser(response);
+      navigate('/');
     }
   };
 
