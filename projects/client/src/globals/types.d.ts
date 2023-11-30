@@ -46,6 +46,7 @@ declare global {
     regex?: RegExp;
     inputText?: string;
     className?: string;
+    onChange: (value: string) => void;
   }
 
   interface DropDownProps {

@@ -30,7 +30,7 @@ function Dropdown({
     <div className={`${className} flex flex-col font-ropa w-full text-2xl`}>
       <span>{children}</span>
       <select
-        id='countryDropdown'
+        id={defaultItem}
         value={selectedItem}
         onChange={handleSelectChange}
         className='w-full bg-white text-black text-opacity-50 rounded-md p-3'
