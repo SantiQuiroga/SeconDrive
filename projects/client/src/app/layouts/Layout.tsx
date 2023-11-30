@@ -1,13 +1,10 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 
 import Header from '../components/header/Header';
 import SideBar from '../components/side-bar/SideBar';
 
-type Props = {
-  children: React.ReactNode;
-};
-
-function Layout({ children }: Props) {
+function Layout() {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return (
@@ -22,7 +19,7 @@ function Layout({ children }: Props) {
           }`}
         />
         <SideBar isOpen={isOpen} />
-        {children}
+        <Outlet />
       </main>
     </div>
   );

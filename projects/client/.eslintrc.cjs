@@ -55,5 +55,6 @@ module.exports = {
     'react-hooks/exhaustive-deps': ['warn'],
     'prettier/prettier': ['error'],
     'jsx-a11y/control-has-associated-label': 'off',
+    '@typescript-eslint/no-misused-promises': 'off'
   },
 };
