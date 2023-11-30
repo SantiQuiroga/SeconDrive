@@ -53,13 +53,13 @@ export const USA = [
 ];
 
 export const Bolivia = [
-  'La Paz',
-  'Cochabamba',
-  'Santa Cruz',
-  'Potosí',
-  'Oruro',
-  'Chuquisaca',
-  'Tarija',
-  'Pando',
   'Beni',
+  'Chuquisaca',
+  'Cochabamba',
+  'La Paz',
+  'Oruro',
+  'Pando',
+  'Potosí',
+  'Santa Cruz',
+  'Tarija',
 ];

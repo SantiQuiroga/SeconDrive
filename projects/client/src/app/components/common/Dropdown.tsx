@@ -1,7 +1,22 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
-function Dropdown({ children, items, className, onSelect }: DropDownProps) {
+function Dropdown({
+  children,
+  items,
+  className,
+  onSelect,
+  defaultItem,
+}: DropDownProps) {
   const [selectedItem, setSelectedItem] = useState('');
+
+  useEffect(() => {
+    if (defaultItem !== undefined) {
+      setSelectedItem(defaultItem);
+      if (onSelect) {
+        onSelect(defaultItem);
+      }
+    }
+  }, [defaultItem, onSelect]);
 
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;

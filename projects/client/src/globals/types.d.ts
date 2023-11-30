@@ -55,5 +55,6 @@ declare global {
     inputText?: string;
     className?: string;
     onSelect?: (selectedItem: string) => void;
+    defaultItem: string;
   }
 }
