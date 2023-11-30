@@ -8,6 +8,7 @@ declare global {
     price: number;
     discount: number;
     alt: string;
+    stock: number;
   }
 
   type CheckboxPriceProps = {
