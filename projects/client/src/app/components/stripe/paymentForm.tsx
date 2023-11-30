@@ -5,6 +5,11 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
+import {
+  StripeCardCvcElementChangeEvent,
+  StripeCardExpiryElementChangeEvent,
+  StripeCardNumberElementChangeEvent,
+} from '@stripe/stripe-js';
 import { useState } from 'react';
 
 function CheckoutForm() {
@@ -12,17 +17,25 @@ function CheckoutForm() {
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [setIsCardComplete] = useState(false);
+
   const [cardNumberComplete, setCardNumberComplete] = useState(false);
   const [expiryComplete, setExpiryComplete] = useState(false);
   const [cvcComplete, setCvcComplete] = useState(false);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage('');
 
-    const cardElement = elements.getElement(CardNumberElement);
+    const cardElement = elements?.getElement(CardNumberElement);
+
+    if (!stripe || !elements) {
+      return;
+    }
+
+    if (!cardElement) {
+      return;
+    }
 
     const { error: cardError, paymentMethod } =
       await stripe.createPaymentMethod({
@@ -31,7 +44,7 @@ function CheckoutForm() {
       });
 
     if (cardError) {
-      setErrorMessage(cardError.message);
+      setErrorMessage(cardError.message || 'An error occurred');
       setLoading(false);
       return;
     }
@@ -55,7 +68,7 @@ function CheckoutForm() {
 
       const data = await response.json();
       console.log(data);
-      cardElement.clear();
+      cardElement?.clear();
       setErrorMessage('Payment successful!');
     } catch (error) {
       setErrorMessage('Payment failed. Please try again.');
@@ -64,15 +77,17 @@ function CheckoutForm() {
     setLoading(false);
   };
 
-  const handleCardNumberChange = event => {
+  const handleCardNumberChange = (
+    event: StripeCardNumberElementChangeEvent
+  ) => {
     setCardNumberComplete(event.complete);
   };
 
-  const handleExpiryChange = event => {
+  const handleExpiryChange = (event: StripeCardExpiryElementChangeEvent) => {
     setExpiryComplete(event.complete);
   };
 
-  const handleCvcChange = event => {
+  const handleCvcChange = (event: StripeCardCvcElementChangeEvent) => {
     setCvcComplete(event.complete);
   };
 
@@ -83,7 +98,10 @@ function CheckoutForm() {
         style={{ borderWidth: '2px', borderColor: 'black' }}
       >
         <div className='mb-4'>
-          <label className='block mb-2'>Card Number</label>
+          <label htmlFor='cardNumber'>
+            Card Number
+            <input type='text' />
+          </label>
           <CardNumberElement
             onChange={handleCardNumberChange}
             options={{
@@ -93,27 +111,32 @@ function CheckoutForm() {
             className='border p-2 w-full'
           />
         </div>
-        <div className='grid grid-cols-2 gap-4 mb-4'>
-          <div>
-            <label className='block mb-2'>Expiration Date</label>
-            <CardExpiryElement
-              onChange={handleExpiryChange}
-              className='border p-2 w-full'
-            />
-          </div>
-          <div>
-            <label className='block mb-2'>CVC</label>
-            <CardCvcElement
-              onChange={handleCvcChange}
-              className='border p-2 w-full'
-            />
-          </div>
+        <div className='mb-4'>
+          <label htmlFor='expiryDate'>
+            Expiration Date
+            <input type='text' />
+          </label>
+          <CardExpiryElement
+            onChange={handleExpiryChange}
+            className='border p-2 w-full'
+          />
+        </div>
+        <div className='mb-4'>
+          <label htmlFor='cvc'>
+            CVC
+            <input type='text' />
+          </label>
+          <CardCvcElement
+            onChange={handleCvcChange}
+            className='border p-2 w-full'
+          />
         </div>
         {errorMessage && (
           <div className='text-red-500 mb-4'>{errorMessage}</div>
         )}
         <div className='flex justify-center'>
           <button
+            type='submit'
             disabled={
               !stripe ||
               loading ||
