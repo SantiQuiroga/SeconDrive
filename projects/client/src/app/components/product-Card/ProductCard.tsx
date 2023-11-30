@@ -10,6 +10,7 @@ function ProductCard({
   price,
   discount,
   alt,
+  stock,
 }: ProductCardProps) {
   const cutTitle = (text: string, maxLength: number) => {
     if (text.length <= maxLength) {
@@ -59,7 +60,7 @@ function ProductCard({
         </div>
       </div>
 
-      <AddToCartButton />
+      <AddToCartButton disabled={!(stock > 0)} />
     </div>
   );
 }

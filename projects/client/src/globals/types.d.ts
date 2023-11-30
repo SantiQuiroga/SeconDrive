@@ -8,6 +8,7 @@ declare global {
     price: number;
     discount: number;
     alt: string;
+    stock: number;
   }
 
   type CheckboxPriceProps = {
@@ -38,5 +39,9 @@ declare global {
     onChange: (value: number) => void;
     onError: (error: string) => void;
     initialValue?: number;
+  }
+
+  interface ButtonProps {
+    disabled: boolean;
   }
 }
