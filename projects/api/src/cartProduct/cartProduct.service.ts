@@ -33,7 +33,7 @@ export default class CartProductService {
       const prod = await this.prisma.product.findUnique({
         where: { id: element.productId }
       });
-      total += (Number((prod.price - (prod.price * prod.discount)).toFixed(0)) * Number(element.quantity));
+      total += (Number((prod.price - (prod.price * prod.discount)).toFixed(2)) * Number(element.quantity));
 
     });
     return total;
