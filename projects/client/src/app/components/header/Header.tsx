@@ -12,9 +12,10 @@ import userLogo from './assets/user.png';
 
 type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  close: () => void;
 };
 
-function Header({ setIsOpen }: Props) {
+function Header({ setIsOpen, close }: Props) {
   const [search, setSearch] = useState<string>('');
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const ref = useRef<HTMLInputElement>(null);
@@ -36,6 +37,7 @@ function Header({ setIsOpen }: Props) {
         <Button
           onClick={() => {
             setIsOpen(prev => !prev);
+            close();
           }}
         >
           <img src={menu} alt='menu' className='h-[45px]' />

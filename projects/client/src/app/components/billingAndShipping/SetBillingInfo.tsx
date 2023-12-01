@@ -6,7 +6,11 @@ import Dropdown from '../common/Dropdown';
 import LabelInput from '../common/LabelInput';
 import { Bolivia, countryList, USA } from './extraComponents/Lists';
 
-function SetBillingInfo() {
+type Props = {
+  onClose: () => void;
+};
+
+function SetBillingInfo({ onClose }: Props) {
   const buttonStyle = 'font-ropa bg-none text-2xl underline';
   const [selectedCountry, setSelectedCountry] = useState('');
   const { user, setUser } = userStore.getState();
@@ -16,44 +20,46 @@ function SetBillingInfo() {
   const [building, setBuilding] = useState(user.building);
   const [zipCode, setZipCode] = useState(user.zipCode);
   const [city, setCity] = useState(user.city);
-  const [country, setCountry] = useState('');
-  const [streetBuilding, setStreetBuilding] = useState('');
+  const [country, setCountry] = useState(user.country);
+  const [streetBuilding, setStreetBuilding] = useState(
+    `${user.streetAddress},${user.building}`
+  );
   const [errorMessage, setErrorMessage] = useState('');
 
   function handleAddress(address: string) {
     const [left, right] = address.split(',');
 
-    setStreetAddress(left);
-    setBuilding(right);
+    setStreetAddress(left.trim());
+    setBuilding(right.trim());
     setStreetBuilding(address);
   }
 
   function validateData() {
-    const regexLettersAndSpaces = /^[A-Za-z\s]+$/;
-    const regexFiveNumbers = /^\d{5}$/;
-    const regexLettersNumbersCommaFourNumbers = /^[a-zA-Z0-9\s]+,\s\d{4}$/;
+    const regexName = /^[A-Za-z\s]+$/;
+    const regexZip = /^\d{5}$/;
+    const regexAddress = /^[a-zA-Z0-9\s]+\s,\s\d{4}$/;
 
-    if (!regexLettersAndSpaces.test(firstName)) {
+    if (!regexName.test(firstName)) {
       setErrorMessage('Name must contain only letters and spaces');
       return false;
     }
-    if (!regexLettersAndSpaces.test(lastName)) {
+    if (!regexName.test(lastName)) {
       setErrorMessage('LastName must contain only letters and spaces');
       return false;
     }
-    if (!regexFiveNumbers.test(zipCode)) {
+    if (!regexZip.test(zipCode)) {
       setErrorMessage('Zip code must contain 5 numbers');
       return false;
     }
 
-    if (!regexLettersNumbersCommaFourNumbers.test(streetBuilding)) {
+    if (!regexAddress.test(streetBuilding)) {
       setErrorMessage(
-        `Pls follow the format 'Street name, 4numbers(building)'`
+        `Street Address format: 'Street name , 4numbers(building)'`
       );
       return false;
     }
 
-    setErrorMessage('');
+    setErrorMessage('Information Uploaded Successfully');
     return true;
   }
   const handleUpdate = async () => {
@@ -73,90 +79,93 @@ function SetBillingInfo() {
           country,
         }),
       });
+      userStore.setState(prevState => {
+        const updatedUser = {
+          ...prevState.user,
+          firstName,
+          lastName,
+          streetAddress,
+          building,
+          zipCode,
+          city,
+          country,
+        };
+
+        setUser(updatedUser);
+        onClose();
+
+        return prevState;
+      });
     }
-
-    userStore.setState(prevState => {
-      const updatedUser = {
-        ...prevState.user,
-        firstName,
-        lastName,
-        streetAddress,
-        building,
-        zipCode,
-        city,
-        country,
-      };
-
-      setUser(updatedUser);
-      return prevState;
-    });
   };
 
   return (
-    <form className='flex-col bg-[#DED9E1] p-5 h-max w-1/4'>
-      <span className='text-3xl'>Enter your name and Address:</span>
-      <div className='flex-col mt-5'>
-        <LabelInput
-          inputText={firstName}
-          onChange={value => setFirstName(value)}
-          maxLength={25}
-        >
-          Name(s)
-        </LabelInput>
-        <LabelInput
-          inputText={lastName}
-          onChange={value => setLastName(value)}
-          maxLength={25}
-        >
-          Last Name(s)
-        </LabelInput>
-        <LabelInput
-          inputText={`${streetAddress} , ${building}`}
-          onChange={value => handleAddress(value)}
-          maxLength={50}
-        >
-          Street Address (Street, Building number)
-        </LabelInput>
-      </div>
+    <div className='fixed h-full z-10 w-full bg-black/20 flex items-center justify-center'>
+      <form className='flex-col justify-center bg-[#DED9E1] p-5 h-max w-1/4'>
+        <span className='text-3xl'>Enter your name and Address:</span>
+        <div className='flex-col mt-5'>
+          <LabelInput
+            inputText={firstName}
+            onChange={value => setFirstName(value)}
+            maxLength={25}
+          >
+            Name(s)
+          </LabelInput>
+          <LabelInput
+            inputText={lastName}
+            onChange={value => setLastName(value)}
+            maxLength={25}
+          >
+            Last Name(s)
+          </LabelInput>
+          <LabelInput
+            inputText={`${streetAddress} , ${building}`}
+            onChange={value => handleAddress(value)}
+            maxLength={50}
+          >
+            Street Address (Street, Building number)
+          </LabelInput>
+        </div>
 
-      <div className='flex justify-between'>
-        <LabelInput
-          inputText={zipCode}
-          onChange={value => setZipCode(value)}
-          className='mr-3'
-          maxLength={5}
-        >
-          Zip code
-        </LabelInput>
+        <div className='flex justify-between'>
+          <LabelInput
+            inputText={zipCode}
+            onChange={value => setZipCode(value)}
+            className='mr-3'
+            maxLength={5}
+          >
+            Zip code
+          </LabelInput>
+          <Dropdown
+            defaultItem={city}
+            items={selectedCountry === 'Bolivia' ? Bolivia : USA}
+            onSelect={selectedItem => setCity(selectedItem)}
+          >
+            States
+          </Dropdown>
+        </div>
+
         <Dropdown
-          defaultItem={city}
-          items={selectedCountry === 'Bolivia' ? Bolivia : USA}
-          onSelect={selectedItem => setCity(selectedItem)}
+          items={countryList}
+          defaultItem={country}
+          onSelect={selectedItem => {
+            setSelectedCountry(selectedItem);
+            setCountry(selectedItem);
+          }}
         >
-          States
+          Country
         </Dropdown>
-      </div>
-
-      <Dropdown
-        items={countryList}
-        defaultItem={country}
-        onSelect={selectedItem => {
-          setSelectedCountry(selectedItem);
-          setCountry(selectedItem);
-        }}
-      >
-        Country
-      </Dropdown>
-      <p className='flex justify-center w-full'>{errorMessage}&nbsp;</p>
-      <div className='flex justify-between mt-11'>
-        <button type='button' className={buttonStyle}>
-          Cancel
-        </button>
-        <button type='button' onClick={handleUpdate} className={buttonStyle}>
-          Accept
-        </button>
-      </div>
-    </form>
+        <p className='flex justify-center w-full'>{errorMessage}&nbsp;</p>
+        <div className='flex justify-between mt-11'>
+          <button type='button' className={buttonStyle} onClick={onClose}>
+            Cancel
+          </button>
+          <button type='button' onClick={handleUpdate} className={buttonStyle}>
+            Accept
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
 

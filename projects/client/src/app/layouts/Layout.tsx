@@ -1,16 +1,18 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
+import SetBillingInfo from '../components/billingAndShipping/SetBillingInfo';
 import Header from '../components/header/Header';
 import SideBar from '../components/side-bar/SideBar';
 
 function Layout() {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [settings, setSettings] = React.useState<boolean>(false);
 
   return (
     <div className='h-screen flex flex-col overflow-y-scroll relative'>
       <header className='w-full z-30 top-0 flex sticky'>
-        <Header setIsOpen={setIsOpen} />
+        <Header setIsOpen={setIsOpen} close={() => setSettings(false)} />
       </header>
       <main className='flex grow'>
         <div
@@ -18,7 +20,19 @@ function Layout() {
             isOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         />
-        <SideBar isOpen={isOpen} />
+        <SideBar
+          isOpen={isOpen}
+          openSettings={setSettings}
+          onClose={() => setIsOpen(false)}
+        />
+        {settings && (
+          <SetBillingInfo
+            onClose={() => {
+              setSettings(false);
+              window.location.reload();
+            }}
+          />
+        )}
         <Outlet />
       </main>
     </div>
