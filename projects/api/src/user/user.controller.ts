@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { User } from "@prisma/client";
 
@@ -34,5 +34,11 @@ export default class UserController {
   async findAll(): Promise<User[]> {
     const response = await this.userService.findAll();
     return response;
+  }
+
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() user: User) {
+    const response = await this.userService.update(Number(id), user);
+    return response
   }
 }

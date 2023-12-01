@@ -18,7 +18,7 @@ function AddToCartButton({ disabled }: ButtonProps) {
       onClick={handleClick}
       disabled={disabled}
     >
-      {disabled ? 'Add to cart +' : 'Out of stock'}
+      {disabled ? 'Out of stock' : 'Add to cart +'}
     </button>
   );
 }
