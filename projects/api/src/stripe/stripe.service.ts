@@ -5,7 +5,7 @@ const stripe = new Stripe('sk_test_51OCWakGYBnnyXwbrs8SVjDbpRWlbEGCLChYlGcqiTTxf
 
 @Injectable()
 export default class StripeService {
-  static async checkout(paymentData: any): Promise<any> {
+  async checkout(paymentData: any): Promise<any> {
     const { id, amount } = paymentData;
 
     try {
