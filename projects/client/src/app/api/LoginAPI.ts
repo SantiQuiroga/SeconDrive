@@ -44,3 +44,8 @@ export async function login(
 
   return response;
 }
+
+export async function etUserByID(id: number): Promise<Response> {
+  const response = await fetch(`/api/user/${id}`);
+  return response;
+}

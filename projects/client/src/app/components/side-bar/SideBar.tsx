@@ -6,9 +6,11 @@ import settingsIcon from './assets/setting.png';
 
 type Props = {
   isOpen: boolean;
+  openSettings: () => void;
+  onClose: () => void;
 };
 
-function SideBar({ isOpen }: Props): JSX.Element {
+function SideBar({ isOpen, openSettings, onClose }: Props): JSX.Element {
   const [categories, setCategories] = useState<Category[]>([]);
   const [error, setError] = useState<Error | null>(null);
 
@@ -56,6 +58,10 @@ function SideBar({ isOpen }: Props): JSX.Element {
             <button
               type='button'
               className='text-black hover:text-blue-500 text-base font-ropa-sans'
+              onClick={() => {
+                onClose();
+                openSettings();
+              }}
             >
               <img src={settingsIcon} alt='settings logo' />
             </button>
