@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import Stripe from 'stripe';
 
-const stripe = new Stripe('sk_test_51OCWakGYBnnyXwbrs8SVjDbpRWlbEGCLChYlGcqiTTxfUreAtw3qN9k4Dg9kJm7JrChLCRPI05E8FavYLh6UpfzV00y2Oun5SX', { apiVersion: '2023-10-16' });
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: '2023-10-16',
+});
 
 @Injectable()
 export default class StripeService {
@@ -15,7 +17,7 @@ export default class StripeService {
         description: 'Item description ',
         payment_method: id,
         confirm: true,
-        return_url: 'http://localhost:3000/payment/payment-success'
+        return_url: 'http://localhost:3000/payment/payment-success',
       });
 
       console.log(payment);
