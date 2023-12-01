@@ -43,9 +43,9 @@ declare global {
 
   interface InputProps {
     children: React.ReactNode;
-    regex?: RegExp;
     inputText?: string;
     className?: string;
+    maxLength?: number;
     onChange: (value: string) => void;
   }
 
@@ -57,5 +57,21 @@ declare global {
     className?: string;
     onSelect?: (selectedItem: string) => void;
     defaultItem: string;
+  }
+
+  interface User {
+    userId: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    streetAddress: string;
+    building: string;
+    zipCode: string;
+    city: string;
+    country: string;
+    phone: string;
+    createdAt: string;
+    updatedAt: string;
   }
 }
