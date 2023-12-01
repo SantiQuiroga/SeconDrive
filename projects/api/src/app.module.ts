@@ -6,6 +6,7 @@ import CartModule from './cart/cart.module';
 import CartProductModule from './cartProduct/cartProduct.module';
 import CategoryModule from './category/category.module';
 import ProductModule from './product/product.module';
+import StripeModule from './stripe/stripe.module';
 import UserModule from './user/user.module';
 
 @Module({
@@ -17,7 +18,8 @@ import UserModule from './user/user.module';
     ProductModule,
     CartModule,
     CartProductModule,
-    UserModule
+    UserModule,
+    StripeModule
   ],
 })
-export default class AppModule {}
+export default class AppModule { }
