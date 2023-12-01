@@ -12,7 +12,7 @@ export default class StripeService {
     const { id, amount } = paymentData;
 
     try {
-      const payment = await stripe.paymentIntents.create({
+      await stripe.paymentIntents.create({
         amount,
         currency: 'USD',
         description: 'Item description ',
@@ -20,12 +20,8 @@ export default class StripeService {
         confirm: true,
         return_url: 'http://localhost:3000/payment/payment-success',
       });
-
-      console.log(payment);
-
       return { message: 'Successful Payment' };
     } catch (error) {
-      console.log(error);
       return { message: error.raw.message };
     }
   }

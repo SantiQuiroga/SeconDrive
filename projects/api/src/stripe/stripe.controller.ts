@@ -4,7 +4,7 @@ import StripeService from './stripe.service';
 
 @Controller('stripe')
 export default class StripeController {
-  constructor(private readonly stripeService: StripeService) { }
+  constructor(private readonly stripeService: StripeService) {}
 
   @Post()
   async checkout(@Body() paymentData: { id: string; amount: number }) {

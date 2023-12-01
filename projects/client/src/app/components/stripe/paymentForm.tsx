@@ -66,15 +66,15 @@ function CheckoutForm() {
         throw new Error('Payment failed');
       }
 
-      const data = await response.json();
-      console.log(data);
-      cardElement?.clear();
-      setErrorMessage('Payment successful!');
+      await response.json().then(() => {
+        cardElement?.clear();
+        setErrorMessage('Payment successful!');
+      });
     } catch (error) {
       setErrorMessage('Payment failed. Please try again.');
-      console.error(error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const handleCardNumberChange = (
@@ -100,7 +100,7 @@ function CheckoutForm() {
         <div className='mb-4'>
           <label htmlFor='cardNumber'>
             Card Number
-            <input type='text' />
+            {/* <input type='text' /> */}
           </label>
           <CardNumberElement
             onChange={handleCardNumberChange}
@@ -114,7 +114,7 @@ function CheckoutForm() {
         <div className='mb-4'>
           <label htmlFor='expiryDate'>
             Expiration Date
-            <input type='text' />
+            {/* <input type='text' /> */}
           </label>
           <CardExpiryElement
             onChange={handleExpiryChange}
@@ -124,7 +124,7 @@ function CheckoutForm() {
         <div className='mb-4'>
           <label htmlFor='cvc'>
             CVC
-            <input type='text' />
+            {/* <input type='text' /> */}
           </label>
           <CardCvcElement
             onChange={handleCvcChange}
