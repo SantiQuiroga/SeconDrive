@@ -2,11 +2,13 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import userStore from '@/app/store/userStore';
+
 import Button from '../button/Button';
 import cart from './assets/cart.png';
 import logo from './assets/logo.png';
 import menu from './assets/menu.png';
-import user from './assets/user.png';
+import userLogo from './assets/user.png';
 
 type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,6 +19,8 @@ function Header({ setIsOpen }: Props) {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const ref = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const { user, logout } = userStore.getState();
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
@@ -79,8 +83,24 @@ function Header({ setIsOpen }: Props) {
         </div>
       </div>
       <div className='flex gap-6'>
-        <Button>
-          <img src={user} alt='user' className='h-[45px]' />
+        <Button
+          onClick={() => {
+            if (user.firstName) {
+              setIsMenuOpen(prev => !prev);
+            } else {
+              navigate('/login');
+            }
+          }}
+        >
+          <img src={userLogo} alt='user' className='h-[45px]' />
+          <span>{user.firstName ? user.firstName : 'Login'}</span>
+          {isMenuOpen && (
+            <div className='absolute  px-7 py-2 rounded-xl shadow-xl text-white bg-black'>
+              <Button className='h-full w-full' onClick={() => logout()}>
+                Logout
+              </Button>
+            </div>
+          )}
         </Button>
         <Button>
           <img src={cart} alt='cart' className='h-[45px]' />

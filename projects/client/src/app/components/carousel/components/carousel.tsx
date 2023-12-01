@@ -85,6 +85,7 @@ function Carousel({
                 image={item.image}
                 price={Number(item.price)}
                 alt={item.name}
+                stock={item.stock}
               >
                 {item.name}
               </ProductCard>
