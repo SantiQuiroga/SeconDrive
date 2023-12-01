@@ -8,6 +8,7 @@ const stripe = new Stripe(
 
 @Injectable()
 export default class StripeService {
+  // eslint-disable-next-line class-methods-use-this
   async checkout(paymentData: any): Promise<any> {
     const { id, amount } = paymentData;
 
