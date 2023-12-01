@@ -6,7 +6,7 @@ import settingsIcon from './assets/setting.png';
 
 type Props = {
   isOpen: boolean;
-  openSettings: React.Dispatch<React.SetStateAction<boolean>>;
+  openSettings: () => void;
   onClose: () => void;
 };
 
@@ -60,7 +60,7 @@ function SideBar({ isOpen, openSettings, onClose }: Props): JSX.Element {
               className='text-black hover:text-blue-500 text-base font-ropa-sans'
               onClick={() => {
                 onClose();
-                openSettings(true);
+                openSettings();
               }}
             >
               <img src={settingsIcon} alt='settings logo' />

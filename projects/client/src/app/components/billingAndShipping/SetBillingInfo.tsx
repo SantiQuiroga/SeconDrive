@@ -22,16 +22,16 @@ function SetBillingInfo({ onClose }: Props) {
   const [city, setCity] = useState(user.city);
   const [country, setCountry] = useState(user.country);
   const [streetBuilding, setStreetBuilding] = useState(
-    `${user.streetAddress},${user.building}`
+    `${user.streetAddress} , ${user.building}`
   );
   const [errorMessage, setErrorMessage] = useState('');
 
   function handleAddress(address: string) {
     const [left, right] = address.split(',');
+    setStreetBuilding(address);
 
     setStreetAddress(left.trim());
     setBuilding(right.trim());
-    setStreetBuilding(address);
   }
 
   function validateData() {
@@ -59,7 +59,6 @@ function SetBillingInfo({ onClose }: Props) {
       return false;
     }
 
-    setErrorMessage('Information Uploaded Successfully');
     return true;
   }
   const handleUpdate = async () => {
@@ -119,7 +118,7 @@ function SetBillingInfo({ onClose }: Props) {
             Last Name(s)
           </LabelInput>
           <LabelInput
-            inputText={`${streetAddress} , ${building}`}
+            inputText={streetBuilding}
             onChange={value => handleAddress(value)}
             maxLength={50}
           >

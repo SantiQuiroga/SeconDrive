@@ -4,10 +4,12 @@ import { Outlet } from 'react-router-dom';
 import SetBillingInfo from '../components/billingAndShipping/SetBillingInfo';
 import Header from '../components/header/Header';
 import SideBar from '../components/side-bar/SideBar';
+import userStore from '../store/userStore';
 
 function Layout() {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [settings, setSettings] = React.useState<boolean>(false);
+  const { user } = userStore.getState();
 
   return (
     <div className='h-screen flex flex-col overflow-y-scroll relative'>
@@ -22,7 +24,7 @@ function Layout() {
         />
         <SideBar
           isOpen={isOpen}
-          openSettings={setSettings}
+          openSettings={() => setSettings(user.userId != null)}
           onClose={() => setIsOpen(false)}
         />
         {settings && (
