@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
+import cartStore from '@/app/store/cartStore';
 import { getProductPageLink } from '@/globals/links';
 
+import Button from '../button/Button';
 import NumericInput from './components/NumericInput';
 import OfferBadge from './components/OfferBadge';
 
@@ -14,19 +16,20 @@ function CartProductCard({
   alt,
   stock,
   initialValue = 1,
-  onQuantityChange,
+  remove,
 }: CartProductCardProps) {
   const [stockMessage, setStockMessage] = useState<string>();
   const discountedPrice = price - (price * discount) / 100;
   const [subtotal, setSubtotal] = useState<number>(
     discountedPrice * initialValue
   );
-  const productPage = getProductPageLink(id);
+  const { updateQuantity } = cartStore.getState();
+  const productPage = getProductPageLink(String(id));
   const spanStyles = 'flex w-full text-base font-ropa';
 
   const handleQuantityChange = (newQuantity: number) => {
     setSubtotal(newQuantity * discountedPrice);
-    onQuantityChange(id, newQuantity);
+    updateQuantity(id, newQuantity);
   };
 
   const handleStockError = (error: string) => {
@@ -94,12 +97,14 @@ function CartProductCard({
           <p className='text-[#DC0700] text-sm w-full text-center'>
             {stockMessage} &nbsp;
           </p>
-          <button
-            type='button'
+          <Button
             className='flex items-center text-xl justify-center bg-white w-full h-8 p-2 font-medium font-ropa'
+            onClick={() => {
+              remove();
+            }}
           >
             Remove
-          </button>
+          </Button>
         </div>
       </div>
     </div>
