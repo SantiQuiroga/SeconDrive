@@ -9,6 +9,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
   const { setUser } = userStore.getState();
 
@@ -26,7 +27,10 @@ function Login() {
     } else {
       setError(false);
       setUser(response);
-      navigate('/');
+      setLoginSuccess(true);
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
     }
   };
 
@@ -76,6 +80,11 @@ function Login() {
             {error && (
               <span className='text-red-500 font-bold flex w-full justify-center text-lg'>
                 Invalid Credentials
+              </span>
+            )}
+            {loginSuccess && (
+              <span className='text-green-500 font-bold flex w-full justify-center text-lg'>
+                Successful Login
               </span>
             )}
           </div>
