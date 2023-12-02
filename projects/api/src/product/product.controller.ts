@@ -39,7 +39,7 @@ export default class ProductController {
     return { products };
   }
 
-  @Get(':categoryid')
+  @Get('/category/:categoryid')
   findAllByCategoryId(
     @Param('categoryid') categoryid: string
   ): Promise<Product[]> {

@@ -44,7 +44,7 @@ function SideBar({ isOpen, openSettings, onClose }: Props): JSX.Element {
           {categories.map(category => (
             <li key={category.id}>
               <a
-                href={`/${category.id}`}
+                href={`/category/${category.id}`}
                 className='text-[26px] text-black hover:text-blue-500 text-base font-ropa-sans'
               >
                 {category.name}
