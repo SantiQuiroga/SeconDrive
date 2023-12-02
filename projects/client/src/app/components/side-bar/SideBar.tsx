@@ -44,7 +44,7 @@ function SideBar({ isOpen, openSettings, onClose }: Props): JSX.Element {
           {categories.map(category => (
             <li key={category.id}>
               <a
-                href={`/${category.id}`}
+                href={`/category/${category.id}`}
                 className='text-[26px] text-black hover:text-blue-500 text-base font-ropa-sans'
               >
                 {category.name}
@@ -54,7 +54,7 @@ function SideBar({ isOpen, openSettings, onClose }: Props): JSX.Element {
         </ul>
         <hr className='border-black border-[1.2px]' />
         <div className='h-full flex justify-end flex-col'>
-          <div className='mb-10'>
+          <div className='mb-10 pb-10'>
             <button
               type='button'
               className='text-black hover:text-blue-500 text-base font-ropa-sans'

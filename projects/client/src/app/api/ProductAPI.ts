@@ -17,3 +17,15 @@ export async function GetProductsByName(name: string): Promise<Response> {
   const response = await fetch(`/api/product/search/${name}`);
   return response;
 }
+
+export async function GetAllProducts(): Promise<Response> {
+  const response = await fetch('/api/product');
+  return response;
+}
+
+export async function GetProductByCategory(
+  categoryid: string
+): Promise<Response> {
+  const response = await fetch(`/api/product/category/${categoryid}`);
+  return response;
+}
