@@ -19,15 +19,25 @@ declare global {
 
   interface CartProductCardProps {
     children: React.ReactNode;
-    id: string;
+    id: number;
     image: string;
     price: number;
     discount: number;
     alt: string;
     stock: number;
     initialValue?: number;
-    onQuantityChange: (id: string, quantity: number) => void;
+    remove: () => void;
   }
+
+  type Product = {
+    id: number;
+    title: string;
+    image: string;
+    price: number;
+    discount: number;
+    stock: number;
+    quantity: number;
+  };
 
   interface ProductQuantity {
     id: string;

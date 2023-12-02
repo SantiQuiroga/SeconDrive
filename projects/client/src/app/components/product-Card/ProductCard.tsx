@@ -60,7 +60,15 @@ function ProductCard({
         </div>
       </div>
 
-      <AddToCartButton disabled={!(stock > 0)} />
+      <AddToCartButton
+        disabled={!(stock > 0)}
+        id={Number(id)}
+        image={image}
+        price={price}
+        discount={discount}
+        stock={Number(stock)}
+        title={String(children)}
+      />
     </div>
   );
 }

@@ -104,7 +104,11 @@ function Header({ setIsOpen, close }: Props) {
             </div>
           )}
         </Button>
-        <Button>
+        <Button
+          onClick={() => {
+            navigate('/cart');
+          }}
+        >
           <img src={cart} alt='cart' className='h-[45px]' />
         </Button>
       </div>

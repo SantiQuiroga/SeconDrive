@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { getUniqueProduct, ProductApi } from '@/api/productApi';
+import Button from '@/app/components/button/Button';
+import cartStore from '@/app/store/cartStore';
 
 import CheckboxPrice from '../../components/checkbox-price/checkboxprice';
 
@@ -11,6 +13,8 @@ function ProductPage() {
   const [isAvailable, setIsAvailable] = useState(true);
   const [changePrice, setChangePrice] = useState(false);
   const [price, setPrice] = useState(0);
+  const { addItem } = cartStore.getState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getUniqueProduct(String(id))
@@ -97,12 +101,23 @@ function ProductPage() {
             price.toFixed(2)
           )}
         </h3>
-        <button
-          type='button'
+        <Button
           className='flex items-center text-[35px] justify-center bg-white w-full p-4 font-medium font-ropa'
+          onClick={() => {
+            addItem({
+              id: Number(product.id),
+              image: product.image,
+              price: product.price,
+              discount: product.discount,
+              stock: product.stock,
+              title: product.name,
+              quantity: 1,
+            });
+            navigate('/cart');
+          }}
         >
           Add to Cart +
-        </button>
+        </Button>
         <h3 className='text-center text-[30px]'>
           {isAvailable ? 'Available' : 'Out of stock'}
         </h3>
