@@ -106,7 +106,11 @@ function Header({ setIsOpen, close }: Props) {
         </Button>
         <Button
           onClick={() => {
-            navigate('/cart');
+            if (user.firstName) {
+              navigate('/cart');
+            } else {
+              navigate('/login');
+            }
           }}
         >
           <img src={cart} alt='cart' className='h-[45px]' />
