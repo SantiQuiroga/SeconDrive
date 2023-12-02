@@ -35,12 +35,23 @@ function SetBillingInfo({ onClose }: Props) {
   }
 
   function validateData() {
-    const regexName = /^[A-Za-z\s]+$/;
+    const regexName = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
     const regexZip = /^\d{5}$/;
-    const regexAddress = /^[a-zA-Z0-9\s]+\s,\s\d{4}$/;
+    const regexAddress = /^^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*\s,\s\d{4}$/;
+
+    if (
+      !firstName.trim() ||
+      !lastName.trim() ||
+      !streetAddress.trim() ||
+      !firstName.trim() ||
+      !zipCode.trim()
+    ) {
+      setErrorMessage('Do not leave blank fields');
+      return false;
+    }
 
     if (!regexName.test(firstName)) {
-      setErrorMessage('Name must contain only letters and spaces');
+      setErrorMessage('Name must contain only letters and spaces between them');
       return false;
     }
     if (!regexName.test(lastName)) {
