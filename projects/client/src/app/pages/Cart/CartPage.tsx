@@ -12,17 +12,6 @@ import cartStore from '@/app/store/cartStore';
 import CheckboxPrice from '../../components/checkbox-price/checkboxprice';
 import CardImage from './assets/card.png';
 
-import { useEffect, useState } from 'react';
-
-import {
-  CartProduct,
-  getAllCartProductsByCartId,
-  getCartTotalPriceByCartId,
-} from '@/api/cartProductApi';
-
-import CheckboxPrice from '../../components/checkbox-price/checkboxprice';
-import CardImage from './assets/card.png';
-
 function CartPage() {
   const navigate = useNavigate();
   const { items } = cartStore.getState();
