@@ -11,6 +11,7 @@ import {
   StripeCardNumberElementChangeEvent,
 } from '@stripe/stripe-js';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function CheckoutForm() {
   const stripe = useStripe();
@@ -21,6 +22,7 @@ function CheckoutForm() {
   const [cardNumberComplete, setCardNumberComplete] = useState(false);
   const [expiryComplete, setExpiryComplete] = useState(false);
   const [cvcComplete, setCvcComplete] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -69,6 +71,9 @@ function CheckoutForm() {
       await response.json().then(() => {
         cardElement?.clear();
         setErrorMessage('Payment successful!');
+        setTimeout(() => {
+          navigate('/invoice');
+        }, 3000);
       });
     } catch (error) {
       setErrorMessage('Payment failed. Please try again.');
