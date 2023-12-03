@@ -53,7 +53,7 @@ function CheckoutForm() {
 
     const { id } = paymentMethod;
     try {
-      const response = await fetch('http://localhost:3000/api/stripe', {
+      const response = await fetch('/api/stripe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
