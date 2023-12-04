@@ -6,6 +6,7 @@ import { User } from '@prisma/client';
 import PrismaService from '@/prisma/prisma.service';
 import CreateUserDto from '@/user/dto/create-user.dto';
 import LoginDto from '@/user/dto/login.dto';
+import UpdateUserDto from '@/user/dto/update-user.dto';
 import UserService from '@/user/user.service';
 
 describe('UserService', () => {
@@ -23,6 +24,7 @@ describe('UserService', () => {
               findUnique: jest.fn(),
               create: jest.fn(),
               findMany: jest.fn(),
+              update: jest.fn(),
             },
           },
         },
@@ -217,6 +219,50 @@ describe('UserService', () => {
       const result = await userService.findAll();
 
       expect(result).toEqual(users);
+    });
+  });
+
+  describe('update', () => {
+    it('should update a user by ID', async () => {
+      const userId = 1;
+      const updateUserDto: UpdateUserDto = {
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'test@example.com',
+        password: 'password',
+        streetAddress: '123 Street',
+        building: '4321',
+        zipCode: '12345',
+        city: 'City',
+        country: 'Country',
+        phone: '87654321',
+      };
+
+      const updatedUser: User = {
+        userId: 1,
+        firstName: 'New name',
+        lastName: 'Last name',
+        email: 'test@example.com',
+        password: 'password',
+        streetAddress: 'fake street',
+        building: '1234',
+        zipCode: '54321',
+        city: 'New City',
+        country: 'New Country',
+        phone: '12345678',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      jest.spyOn(prismaService.user, 'update').mockResolvedValueOnce(updatedUser);
+
+      const result = await userService.update(userId, updateUserDto);
+
+      expect(result).toEqual(updatedUser);
+      expect(prismaService.user.update).toHaveBeenCalledWith({
+        where: { userId },
+        data: updateUserDto,
+      });
     });
   });
 });
