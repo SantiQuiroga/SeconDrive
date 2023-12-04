@@ -296,4 +296,58 @@ describe('ProductService', () => {
             expect(result).toEqual(deletedProduct);
         });
     });
+    describe('create-', () => {
+      it('should create a product with valid data', async () => {
+          const createProductDto: CreateProductDto = {
+              name: 'New Product',
+              price: 19.99,
+              categoryId: 3,
+              description: 'This is a new product',
+              brand: 'xyz',
+              image: 'product-image.jpg',
+              stock: 100,
+              unitSold: 0,
+              discount: 5,
+          };
+          const createdProduct: Product = {
+              id: 3,
+              ...createProductDto,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+          };
+
+          jest.spyOn(prismaService.product, 'create').mockResolvedValueOnce(createdProduct);
+
+          const result = await productService.create(createProductDto);
+
+          expect(prismaService.product.create).toHaveBeenCalledWith({ data: createProductDto });
+          expect(result).toEqual(createdProduct);
+      });
+    });
+  describe('remove-', () => {
+    it('should remove an existing product', async () => {
+        const productIdToRemove = 1;
+        const removedProduct: Product = {
+            id: productIdToRemove,
+            name: 'Product to Remove',
+            price: 15.99,
+            categoryId: 2,
+            description: 'Product to be removed',
+            brand: 'remove-brand',
+            image: 'remove-image.jpg',
+            stock: 50,
+            unitSold: 5,
+            discount: 3,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        };
+
+        jest.spyOn(prismaService.product, 'delete').mockResolvedValueOnce(removedProduct);
+
+        const result = await productService.remove(productIdToRemove);
+
+        expect(prismaService.product.delete).toHaveBeenCalledWith({ where: { id: productIdToRemove } });
+        expect(result).toEqual(removedProduct);
+    });
+});
 });
