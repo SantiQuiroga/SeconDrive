@@ -25,6 +25,7 @@ describe('UserController', () => {
             register: jest.fn(),
             findOne: jest.fn(),
             findAll: jest.fn(),
+            update: jest.fn(),
           },
         },
       ],
@@ -191,6 +192,33 @@ describe('UserController', () => {
       const result = await userController.findAll();
 
       expect(result).toEqual(users);
+    });
+  });
+
+  describe('update', () => {
+    it('should update a user by ID', async () => {
+      const userId = '1';
+      const updatedUser: User = {
+        userId: 1,
+        firstName: 'UpdatedFirstName',
+        lastName: 'UpdatedLastName',
+        email: 'updated@example.com',
+        password: 'updatedPassword',
+        streetAddress: 'UpdatedStreet',
+        building: 'UpdatedBuilding',
+        zipCode: '54321',
+        city: 'UpdatedCity',
+        country: 'UpdatedCountry',
+        phone: '9876543210',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      jest.spyOn(userService, 'update').mockResolvedValueOnce(updatedUser);
+
+      const result = await userController.update(userId, updatedUser);
+
+      expect(result).toEqual(updatedUser);
     });
   });
 });
